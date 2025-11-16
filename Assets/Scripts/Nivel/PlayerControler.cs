@@ -2,112 +2,186 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
-    //Public---------------------------------
+    // -------------------- Public --------------------
     public float velocidad = 5f;
-    public int vida = 3; 
+    public int vida = 3;
     public float fuerzaSalto = 10f;
     public float fuerzaRebote = 10f;
     public float longitudRaycast = 0.1f;
     public LayerMask capaSuelo;
     public bool muerto;
     public Animator animator;
-    //Private--------------------------------
+    public float cooldown = 2f;
+    public int vidaMaxima = 10;
+
+    // -------------------- Private -------------------
     private bool enSuelo;
+    private float timer;
     private Rigidbody2D rb;
     private bool recibiendoDanio;
     private bool atacando;
-    
+
+    // -------------------- Unity Methods -------------
     void Start()
-    {rb = GetComponent<Rigidbody2D>();}
-
-    void Update()
     {
-        if (!muerto) //Si no esta muerto: movimiento, "salto" y ataca
-        { 
-          if (!atacando) //Si no esta atacando: movimiento y "salto"
-          {
-            Movimiento(); //Movimiento, en detalle mas abajo
+        rb = GetComponent<Rigidbody2D>();
+    }
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, longitudRaycast, capaSuelo); //Raycast hacia abajo, mejorar su uso*********************
-            enSuelo = hit.collider != null;
+    private void Update()
+    {
+        if (timer > 0f)
+        {timer -= Time.deltaTime;}
 
-            if (enSuelo && Input.GetKeyDown(KeyCode.Space) && !recibiendoDanio) 
+        if (!muerto) // Si no está muerto: movimiento, salto y ataque
+        {
+            if (!atacando) // Si no está atacando: movimiento y salto
             {
-            rb.AddForce(new Vector2(0f, fuerzaSalto), ForceMode2D.Impulse); //Salto quitado, reutilizar como boton interactuar***************
+                Movimiento();
+
+                // Raycast hacia abajo para detectar suelo
+                RaycastHit2D hit = Physics2D.Raycast(
+                    transform.position,
+                    Vector2.down,
+                    longitudRaycast,
+                    capaSuelo
+                );
+                enSuelo = hit.collider != null;
+
+                // Salto
+                if (enSuelo && Input.GetKeyDown(KeyCode.Space) && !recibiendoDanio)
+                {
+                    rb.AddForce(new Vector2(0f, fuerzaSalto), ForceMode2D.Impulse);
+                }
             }
-          }
-            
-            if (Input.GetKeyDown(KeyCode.Z) && !atacando)
-            {
-            Atacando();
-            }
+
+            // Ataque
+            //if (Input.GetKeyDown(KeyCode.U) && !atacando){Atacando();}
+
+            if (Input.GetKeyDown(KeyCode.U) && !atacando) // Arriba
+                Atacar(0);
+            if (Input.GetKeyDown(KeyCode.J) && !atacando) // Abajo
+                Atacar(1);
+            if (Input.GetKeyDown(KeyCode.H) && !atacando) // Izquierda
+                Atacar(2);
+            if (Input.GetKeyDown(KeyCode.K) && !atacando) // Derecha
+                Atacar(3);
 
         }
-        //Animators------------------------------------------------------------------------
-        //animator.SetBool("ensuelo", enSuelo);
+
+        // ---------------- Animator -------------------
+        // animator.SetBool("ensuelo", enSuelo);
         animator.SetBool("RecibeDanio", recibiendoDanio);
         animator.SetBool("Atacando", atacando);
-        animator.SetBool("muerto",muerto);
+        animator.SetBool("muerto", muerto);
     }
 
-   public void Movimiento() {
-
-        float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad; 
-
+    // -------------------- Movimiento ----------------
+    public void Movimiento()
+    {
+        float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
         float velocidadY = Input.GetAxis("Vertical") * Time.deltaTime * velocidad;
 
-        animator.SetFloat("Movement", velocidadX * velocidad);
-        //animator.SetFloat("Movement", velocidadY * velocidad); //Movimiento en Y aun bug***************************************
+        animator.SetFloat("MovementX", Mathf.Abs(velocidadX * velocidad));
+        animator.SetFloat("MovementY", Mathf.Abs(velocidadY * velocidad));
 
+        // Flip horizontal
         if (velocidadX < 0)
-        {transform.localScale = new Vector3(-1, 1, 1);} //Rota el sprite segun la direccion de su movimiento
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
         if (velocidadX > 0)
-        {transform.localScale = new Vector3(1, 1, 1);}
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
 
-        Vector3 posicion = transform.position; //posicion actual
-
-        if (!recibiendoDanio) //Solo se mueve si no esta reciviendo danio
-            transform.position = new Vector3(velocidadX + posicion.x, velocidadY + posicion.y, posicion.z);
+        // Movimiento directo (ojo: esto ignora física)
+        Vector3 posicion = transform.position;
+        if (!recibiendoDanio)
+        {
+            transform.position = new Vector3(
+                velocidadX + posicion.x,
+                velocidadY + posicion.y,
+                posicion.z
+            );
+        }
     }
-    
+
+    // -------------------- Daño ----------------------
     public void RecibeDanio(Vector2 direccion, int cantDanio)
     {
-        if (!recibiendoDanio) //Evita recibir danio demasiado rapido
+        if (!recibiendoDanio) // Evita recibir daño demasiado rápido
         {
-            recibiendoDanio = true; //vuelve a posibilitar el danio
+            recibiendoDanio = true;
             vida -= cantDanio;
-            if (vida<=0)
+
+            if (vida <= 0)
             {
-                muerto = true; 
-                if (GameManager.Instance != null) 
+                muerto = true;
+                if (GameManager.Instance != null)
                 {
-                    GameManager.Instance.GameOver(); //pantalla de game over
+                    GameManager.Instance.GameOver(); // Pantalla de game over
                 }
-            }else{ //si aun tiene vida, rebota
-                Vector2 rebote = new Vector2(transform.position.x - direccion.x, transform.position.y - direccion.y).normalized; // rebota en direccion opuesta al golpe //rebote sigue extranio*************************************
-                rb.AddForce(rebote * fuerzaRebote,ForceMode2D.Impulse); //agrega el rebote al rigidbody del jugador
             }
-                 
+            else
+            {
+                // Rebote en dirección opuesta al golpe
+                Vector2 rebote = new Vector2(
+                    transform.position.x - direccion.x,
+                    transform.position.y - direccion.y
+                ).normalized;
+
+                rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+            }
         }
-       
     }
-    public void DesactivaDanio() 
+
+    public void DesactivaDanio()
     {
         recibiendoDanio = false;
-        rb.linearVelocity = Vector2.zero; //resetea la fuerza de rebote aplicada al rigidbody
+        rb.linearVelocity = Vector2.zero; // Resetea la fuerza de rebote
     }
-    public void Atacando()
+
+    // -------------------- Ataque --------------------
+    /*public void Atacando()
     {
-        atacando = true;
+        if (timer <= 0f)
+        {
+            atacando = true;
+            timer = cooldown;
+        }
+    }*/
+    public void Atacar(int direccion)
+    {
+        if (timer <= 0f)
+        {
+            atacando = true;
+            timer = cooldown;
+
+            // Dirección del ataque para el Animator
+            animator.SetInteger("DireccionAtaque", direccion);
+
+            if (direccion == 2) // izquierda
+                transform.localScale = new Vector3(-1, 1, 1);
+            else if (direccion == 3) // derecha
+                transform.localScale = new Vector3(1, 1, 1);
+            // Detiene al jugador durante el ataque
+            rb.linearVelocity = Vector2.zero;
+        }
     }
-    public void DesactivaAtacando() 
+
+
+    public void DesactivaAtacando()
     {
         atacando = false;
     }
 
-    private void OnDrawGizmos() //ver rango del Raycast
+    // -------------------- Gizmos --------------------
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.down * longitudRaycast);
+        Gizmos.DrawLine(
+            transform.position,
+            transform.position + Vector3.down * longitudRaycast
+        );
     }
 }

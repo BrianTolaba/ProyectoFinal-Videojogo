@@ -64,7 +64,7 @@ public class EnemyControler : MonoBehaviour
         {
             Vector2 direccionDanio = new Vector2(transform.position.x, 0);
             PlayerControler playerScript = collision.gameObject.GetComponent<PlayerControler>();
-
+            
             playerScript.RecibeDanio(direccionDanio, 1);
             playerVivo = !playerScript.muerto;
             if (!playerVivo) //Se detiene si el jugador muere
@@ -76,7 +76,7 @@ public class EnemyControler : MonoBehaviour
     {
         if (collision.CompareTag("Espada")) //recibe danio de espada
         {
-            Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x, 0);
+            Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
             RecibeDanio(direccionDanio, 1); //cantDanio = 1
         }
     }
