@@ -6,8 +6,8 @@ public class MonkController : MonoBehaviour
     public float detectionRadius = 5.0f;
     public int cantidadCuracion = 1; // cuánto cura cada vez
 
-    private bool playerVivo;
-    private bool muerto;
+    //private bool playerVivo;
+    //private bool muerto;
     private bool curando;
     private Animator animator;
     private PlayerControler playerControler;

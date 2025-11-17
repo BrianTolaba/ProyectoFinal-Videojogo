@@ -9,6 +9,8 @@ public class EnemyControler : MonoBehaviour
     public float speed = 2.0f;
     public float fuerzaRebote = 2f;
     public int vida = 3;
+    public float rangoAtaque = 2;
+    public float delayAtaque = 0.5f; //****
     //private----------------------------------
     private Rigidbody2D rb;
     private Vector2 movement;
@@ -17,6 +19,8 @@ public class EnemyControler : MonoBehaviour
     private bool enMovimiento;
     private bool recibiendoDanio;
     private Animator animator;
+    private bool atacando;
+    private float ataqueTimer;
    
 
     void Start()
@@ -32,29 +36,42 @@ public class EnemyControler : MonoBehaviour
         if (playerVivo && !muerto) 
         {
             Movimiento();
+            VerificarAtaque();
         }
         //Animators
         animator.SetBool("enMovimiento", enMovimiento);
         animator.SetBool("muerto", muerto);
-        }
-    private void Movimiento() {
+        animator.SetBool("Atacando", atacando);
+    }
+    private void Movimiento()
+    {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer < detectionRadius)                                      // si la distancia con el jugador es menor al radio de deteccion
         {                                                                           // el enemigo se mueve en su direccion
             Vector2 direction = (player.position - transform.position).normalized; // restando sus cordenadas con las del objetivo
             if (direction.x < 0)
-            {transform.localScale = new Vector3(-1, 1, 1);}//cambio de orientacion del sprite
-            if (direction.x > 0){transform.localScale = new Vector3(1, 1, 1);}
-            movement = new Vector2(direction.x, direction.y);
-            enMovimiento = true;
+            { transform.localScale = new Vector3(-1, 1, 1); }//cambio de orientacion del sprite
+            if (direction.x > 0) { transform.localScale = new Vector3(1, 1, 1); }
+            if (distanceToPlayer < rangoAtaque)
+            {
+                movement = Vector2.zero;
+                enMovimiento = false;
+            }
+            else
+            {
+                movement = direction;
+                enMovimiento = true;
+            }
         }
         else
         {
             movement = Vector2.zero;
             enMovimiento = false;
         }
-        if (!recibiendoDanio)
+
+        // Solo se mueve si no está recibiendo daño y no está atacando
+        if (!recibiendoDanio && !atacando)
             rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
     }
 
@@ -62,7 +79,7 @@ public class EnemyControler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Vector2 direccionDanio = new Vector2(transform.position.x, 0);
+            Vector2 direccionDanio = new Vector2(transform.position.x, transform.position.y);
             PlayerControler playerScript = collision.gameObject.GetComponent<PlayerControler>();
             
             playerScript.RecibeDanio(direccionDanio, 1);
@@ -71,6 +88,63 @@ public class EnemyControler : MonoBehaviour
             { enMovimiento = false; }
         }
     }
+
+    //*****
+    private void VerificarAtaque()
+    { 
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+        if (distanceToPlayer < rangoAtaque && !atacando)
+        {
+            ataqueTimer += Time.deltaTime;
+            if (ataqueTimer >= delayAtaque)
+            {
+                Atacar();
+                ataqueTimer = 0f;
+            }
+        }
+        else 
+        {
+            ataqueTimer = 0f; //Funciona?
+        }
+    }
+
+    private void Atacar()
+    {
+        atacando = true;
+        movement = Vector2.zero; // detiene el movimiento
+        rb.linearVelocity = Vector2.zero; // asegura que no se desplace
+        // Calcular dirección del ataque
+        Vector2 direccion = (player.position - transform.position).normalized;
+        int dir = 3; // derecha por defecto //******
+
+        if (Mathf.Abs(direccion.x) > Mathf.Abs(direccion.y))
+        {
+            dir = direccion.x < 0 ? 2 : 3; // izquierda o derecha
+        }
+        else
+        {
+            dir = direccion.y < 0 ? 1 : 0; // abajo o arriba
+        }
+
+        animator.SetInteger("DireccionAtaque", dir);
+
+       
+    }
+    public void AplicarDanio()
+    {
+        PlayerControler playerScript = player.GetComponent<PlayerControler>();
+        if (playerScript != null)
+        {
+            Vector2 direccion = (player.position - transform.position).normalized; //tambien hace falta aqui abajo
+            playerScript.RecibeDanio(direccion, 1);
+        }
+    }
+
+    public void TerminaAtaque()
+    {
+        atacando = false;
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -113,10 +187,12 @@ public class EnemyControler : MonoBehaviour
     {Destroy(gameObject);}
    
 
-    private void OnDrawGizmosSelected() //Ver rango de busqueda del enemigo
+    private void OnDrawGizmosSelected() //Ver rango de busqueda y ataque del enemigo
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, rangoAtaque);
     }
 
 }

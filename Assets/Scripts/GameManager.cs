@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI gameOverText;
     public Button reiniciarButton;
     public Button menuButton;
-
+    //private PlayerControler playerControler;
+     
     private bool gameOverActivo = false;
 
     void Awake()
@@ -27,6 +28,8 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+
+        //playerControler = player.GetComponent<PlayerControler>();
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
@@ -74,6 +77,7 @@ public class GameManager : MonoBehaviour
     public void ReiniciarEscena() //reinicia la escena
     {
         Time.timeScale = 1f;
+        //playerControler.vida = 5;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name); //(SceneManager.LoadScene) = carga la Escena y (SceneManger.GetActiveScene().name) = obtine el nombre de la escena actual
     }
     public void IrAlMenu()
