@@ -13,6 +13,8 @@ public class PlayerControler : MonoBehaviour
     public Animator animator;
     public float cooldown = 2f;
     public int vidaMaxima = 10;
+    public int money = 3;
+    public int damage = 1;
 
     // -------------------- Private -------------------
     private bool enSuelo;
@@ -68,14 +70,14 @@ public class PlayerControler : MonoBehaviour
 
         }
 
-        // ---------------- Animator -------------------
+        // ---------------- Animator --------
         // animator.SetBool("ensuelo", enSuelo);
         animator.SetBool("RecibeDanio", recibiendoDanio);
         animator.SetBool("Atacando", atacando);
         animator.SetBool("muerto", muerto);
     }
 
-    // -------------------- Movimiento ----------------
+    // ------------- Movimiento ---------------
     public void Movimiento()
     {
         float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
@@ -106,7 +108,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    // -------------------- Daño ----------------------
+    // ------------------- Daño ----------------
     public void RecibeDanio(Vector2 direccion, int cantDanio)
     {
         if (!recibiendoDanio) // Evita recibir daño demasiado rápido
@@ -124,13 +126,7 @@ public class PlayerControler : MonoBehaviour
             }
             else
             {
-                // Rebote en dirección opuesta al golpe
-                Vector2 rebote = new Vector2(
-                    transform.position.x - direccion.x,
-                    transform.position.y - direccion.y
-                ).normalized;
-
-                rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+                rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
             }
         }
     }
@@ -141,15 +137,8 @@ public class PlayerControler : MonoBehaviour
         rb.linearVelocity = Vector2.zero; // Resetea la fuerza de rebote
     }
 
-    // -------------------- Ataque --------------------
-    /*public void Atacando()
-    {
-        if (timer <= 0f)
-        {
-            atacando = true;
-            timer = cooldown;
-        }
-    }*/
+    // -------------- Ataque ---------------
+  
     public void Atacar(int direccion)
     {
         if (timer <= 0f)
@@ -174,8 +163,18 @@ public class PlayerControler : MonoBehaviour
     {
         atacando = false;
     }
+    // --------------Mejoras---------------
+    public void MejorarSalud(int cantidad)
+    {
+        vidaMaxima += cantidad;          // aumenta el límite
+        vida = vidaMaxima;               // opcional: llenar la vida al máximo
+    }
+    public void MejorarDanio(int cantidad)
+    {
+        damage += cantidad; // aumenta el daño
+    }
 
-    // -------------------- Gizmos --------------------
+    //------------- Gizmos ----------------
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
