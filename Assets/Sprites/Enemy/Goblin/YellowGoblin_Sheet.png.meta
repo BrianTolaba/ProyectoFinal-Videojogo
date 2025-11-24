@@ -1,0 +1,1055 @@
+fileFormatVersion: 2
+guid: bf3f0b78b61df684eb8de3a250e585cf
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8539660893331045543
+    second: Torch_Yellow_0
+  - first:
+      213: 563455427626420738
+    second: Torch_Yellow_1
+  - first:
+      213: -985952002924066054
+    second: Torch_Yellow_2
+  - first:
+      213: -2604424291600493200
+    second: Torch_Yellow_3
+  - first:
+      213: 9133772042838789785
+    second: Torch_Yellow_4
+  - first:
+      213: 4125732075108373231
+    second: Torch_Yellow_5
+  - first:
+      213: 630957095615218658
+    second: Torch_Yellow_6
+  - first:
+      213: 1922073080981638341
+    second: Torch_Yellow_7
+  - first:
+      213: 5080681028956044341
+    second: Torch_Yellow_8
+  - first:
+      213: 6158080401596670990
+    second: Torch_Yellow_9
+  - first:
+      213: 6991610960930032427
+    second: Torch_Yellow_10
+  - first:
+      213: -6544773096341544082
+    second: Torch_Yellow_11
+  - first:
+      213: 2321408640201443680
+    second: Torch_Yellow_12
+  - first:
+      213: -5086464827826924230
+    second: Torch_Yellow_13
+  - first:
+      213: -61340256591446857
+    second: Torch_Yellow_14
+  - first:
+      213: -2763290231725701477
+    second: Torch_Yellow_15
+  - first:
+      213: -9050948885146434323
+    second: Torch_Yellow_16
+  - first:
+      213: 6887175331571527200
+    second: Torch_Yellow_17
+  - first:
+      213: 3980509180046900381
+    second: Torch_Yellow_18
+  - first:
+      213: 7502017373034172888
+    second: Torch_Yellow_19
+  - first:
+      213: 322632620141090512
+    second: Torch_Yellow_20
+  - first:
+      213: 1614435981804525083
+    second: Torch_Yellow_21
+  - first:
+      213: 4784567624715413625
+    second: Torch_Yellow_22
+  - first:
+      213: -2361405475753512219
+    second: Torch_Yellow_23
+  - first:
+      213: -2032171729900293729
+    second: Torch_Yellow_24
+  - first:
+      213: -796221509304355803
+    second: Torch_Yellow_25
+  - first:
+      213: 4773179332221295035
+    second: Torch_Yellow_26
+  - first:
+      213: 4213725094475612251
+    second: Torch_Yellow_27
+  - first:
+      213: 7016780646541543974
+    second: Torch_Yellow_28
+  - first:
+      213: 5998561000539982538
+    second: Torch_Yellow_29
+  - first:
+      213: 613420728322998149
+    second: Torch_Yellow_30
+  - first:
+      213: -5441471747405405376
+    second: Torch_Yellow_31
+  - first:
+      213: -6723176798526768439
+    second: Torch_Yellow_32
+  - first:
+      213: -7823187598382806627
+    second: Torch_Yellow_33
+  - first:
+      213: 8441835799091914112
+    second: Torch_Yellow_34
+  - first:
+      213: 2130637048413429788
+    second: Torch_Yellow_35
+  - first:
+      213: -7244046262069615877
+    second: Torch_Yellow_36
+  - first:
+      213: 8396202952622200539
+    second: Torch_Yellow_37
+  - first:
+      213: -4834993467194653130
+    second: Torch_Yellow_38
+  - first:
+      213: 6887385893953438451
+    second: Torch_Yellow_39
+  - first:
+      213: 4421535925558449134
+    second: Torch_Yellow_40
+  - first:
+      213: -7280567796994967589
+    second: Torch_Yellow_41
+  - first:
+      213: -9192838056216749133
+    second: Torch_Yellow_42
+  - first:
+      213: -5806384652685931818
+    second: Torch_Yellow_43
+  - first:
+      213: 1720207570421767894
+    second: Torch_Yellow_44
+  - first:
+      213: 3559279334178587652
+    second: Torch_Yellow_45
+  - first:
+      213: -3997629401904365846
+    second: Torch_Yellow_46
+  - first:
+      213: 6703593877149987831
+    second: Torch_Yellow_47
+  - first:
+      213: -3330284978177556721
+    second: Torch_Yellow_48
+  - first:
+      213: 3928022094998831715
+    second: Torch_Yellow_49
+  - first:
+      213: 2891237003319464899
+    second: Torch_Yellow_50
+  - first:
+      213: -3889980505732520281
+    second: Torch_Yellow_51
+  - first:
+      213: -4304249197664083639
+    second: Torch_Yellow_52
+  - first:
+      213: 5708017795137736398
+    second: Torch_Yellow_53
+  - first:
+      213: -1572588741846810967
+    second: Torch_Yellow_54
+  - first:
+      213: -1244909208718613507
+    second: Torch_Yellow_55
+  - first:
+      213: -2449116737489643018
+    second: Torch_Yellow_56
+  - first:
+      213: -1753715013458402410
+    second: Torch_Yellow_57
+  - first:
+      213: -4608706630313849521
+    second: Torch_Yellow_58
+  - first:
+      213: 1470976531880488671
+    second: Torch_Yellow_59
+  - first:
+      213: 3975015430468516095
+    second: Torch_Yellow_60
+  - first:
+      213: -7840178199865999606
+    second: Torch_Yellow_61
+  - first:
+      213: -7870895320595352446
+    second: Torch_Yellow_62
+  - first:
+      213: -6898224693520626797
+    second: Torch_Yellow_63
+  - first:
+      213: 1899550495606760030
+    second: Torch_Yellow_64
+  - first:
+      213: -9146131558740291633
+    second: Torch_Yellow_65
+  - first:
+      213: -460093915821168391
+    second: Torch_Yellow_66
+  - first:
+      213: -1953770000340913854
+    second: Torch_Yellow_67
+  - first:
+      213: 2948751851012238757
+    second: Torch_Yellow_68
+  - first:
+      213: 2562894302425193719
+    second: Torch_Yellow_69
+  - first:
+      213: -4833878148851661378
+    second: Torch_Yellow_70
+  - first:
+      213: -2579527529166299134
+    second: Torch_Yellow_71
+  - first:
+      213: 2569287687815643512
+    second: Torch_Yellow_72
+  - first:
+      213: -7861681753709583666
+    second: Torch_Yellow_73
+  - first:
+      213: 4066255340798633454
+    second: Torch_Yellow_74
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 890d86bdc590d4e4fbbbf4ed5899f381
+      internalID: 2124221226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d3e068a769824c409a0a04fb0076f49
+      internalID: -2127564678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69154b7e99d18374f82e84c2118c8f69
+      internalID: -1361319339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbc703d51ee535d488ed8f7661f77ba5
+      internalID: 1876560800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46073a816b75d21478d36fc71ff72587
+      internalID: 937740520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0bb1e2c80fb1d45a1082a49c69f1d1
+      internalID: -8504484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 768
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed3dc4cbfe00ba943ab052ad88fc56ca
+      internalID: 1401174966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a87cfb8c7b0eaf2458b4e7deb11addf8
+      internalID: -1853204545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b19cd8c42f45a9488cf52db4db45154
+      internalID: 616665543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b23be9a1ba96824c8df4d292589d6ac
+      internalID: -797888097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4b95d53f0b63bf47b141f24cd248e68
+      internalID: 1439396823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eec29338ddc70d14fb7c2010ebf12178
+      internalID: 1346560526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 576
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3d4199f7aaf6484abc10c568328111a
+      internalID: -1038013342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c9c27ff3108dd94887bbe8d6ffd2e23
+      internalID: -1687110890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77169c83b0efcc44a8c9fa8d99b7fca1
+      internalID: -309440741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33ec2707ce101d04285a90e7a09bd81a
+      internalID: -1216616429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81762b45113a1e346859ed6f6aa93f7b
+      internalID: -1837617455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce224aea39a13534c956229e32e94458
+      internalID: 402937360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e14e554a4fc17bc41bed96961f37d27e
+      internalID: 239318350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06abe0e245f7ee44d97465665147498f
+      internalID: 1837443568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9c7e2465def41e4dadfe1fb726feb41
+      internalID: 1282736480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d92bcbf31366d34f9524003934dac3d
+      internalID: -1822515358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 720103eef962e2446818abbde02a1d12
+      internalID: 1284478948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf3bc3d47957f7c488eaf35a25f3de79
+      internalID: 981840978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 192
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69cb7e00ad548dc4c913b030c594dacf
+      internalID: -823583852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f8ef67e5aabd0b4a8382c0c24479203
+      internalID: -1234632487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e458df5c4c518cd4994d75be420098ad
+      internalID: -17639853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03f0f10b26c8bab4185799520fccff58
+      internalID: -797076961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 669276beb7db4d6458c8ebe4a26d1dc0
+      internalID: 940467566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a61b4547284a1a42b9fe985fec4d7b1
+      internalID: 87896163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: YellowGoblin_Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 192
+        height: 192
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed3fefcd6d8e34d43a5b64eb4d94759d
+      internalID: -1620889085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 3c5fa4c14e2ce5140b761ba8fffad10f
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      YellowGoblin_Sheet_0: 2124221226
+      YellowGoblin_Sheet_1: -2127564678
+      YellowGoblin_Sheet_10: 1439396823
+      YellowGoblin_Sheet_11: 1346560526
+      YellowGoblin_Sheet_12: -1038013342
+      YellowGoblin_Sheet_13: -1687110890
+      YellowGoblin_Sheet_14: -309440741
+      YellowGoblin_Sheet_15: -1216616429
+      YellowGoblin_Sheet_16: -1837617455
+      YellowGoblin_Sheet_17: 402937360
+      YellowGoblin_Sheet_18: 239318350
+      YellowGoblin_Sheet_19: 1837443568
+      YellowGoblin_Sheet_2: -1361319339
+      YellowGoblin_Sheet_20: 1282736480
+      YellowGoblin_Sheet_21: -1822515358
+      YellowGoblin_Sheet_22: 1284478948
+      YellowGoblin_Sheet_23: 981840978
+      YellowGoblin_Sheet_24: -823583852
+      YellowGoblin_Sheet_25: -1234632487
+      YellowGoblin_Sheet_26: -17639853
+      YellowGoblin_Sheet_27: -797076961
+      YellowGoblin_Sheet_28: 940467566
+      YellowGoblin_Sheet_29: 87896163
+      YellowGoblin_Sheet_3: 1876560800
+      YellowGoblin_Sheet_30: -1620889085
+      YellowGoblin_Sheet_4: 937740520
+      YellowGoblin_Sheet_5: -8504484
+      YellowGoblin_Sheet_6: 1401174966
+      YellowGoblin_Sheet_7: -1853204545
+      YellowGoblin_Sheet_8: 616665543
+      YellowGoblin_Sheet_9: -797888097
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

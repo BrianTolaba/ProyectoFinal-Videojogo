@@ -13,6 +13,8 @@ public class PlayerControler : MonoBehaviour
     public Animator animator;
     public float cooldown = 2f;
     public int vidaMaxima = 10;
+    public int money = 3;
+    public int damage = 1;
 
     // -------------------- Private -------------------
     private bool enSuelo;
@@ -20,11 +22,12 @@ public class PlayerControler : MonoBehaviour
     private Rigidbody2D rb;
     private bool recibiendoDanio;
     private bool atacando;
-
+    private Vector3 posicionInicial;
     // -------------------- Unity Methods -------------
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        posicionInicial = transform.position;
     }
 
     private void Update()
@@ -68,14 +71,14 @@ public class PlayerControler : MonoBehaviour
 
         }
 
-        // ---------------- Animator -------------------
+        // ---------------- Animator --------
         // animator.SetBool("ensuelo", enSuelo);
         animator.SetBool("RecibeDanio", recibiendoDanio);
         animator.SetBool("Atacando", atacando);
         animator.SetBool("muerto", muerto);
     }
 
-    // -------------------- Movimiento ----------------
+    // ------------- Movimiento ---------------
     public void Movimiento()
     {
         float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
@@ -106,7 +109,7 @@ public class PlayerControler : MonoBehaviour
         }
     }
 
-    // -------------------- Daño ----------------------
+    // ------------------- Daño ----------------
     public void RecibeDanio(Vector2 direccion, int cantDanio)
     {
         if (!recibiendoDanio) // Evita recibir daño demasiado rápido
@@ -124,13 +127,7 @@ public class PlayerControler : MonoBehaviour
             }
             else
             {
-                // Rebote en dirección opuesta al golpe
-                Vector2 rebote = new Vector2(
-                    transform.position.x - direccion.x,
-                    transform.position.y - direccion.y
-                ).normalized;
-
-                rb.AddForce(rebote * fuerzaRebote, ForceMode2D.Impulse);
+                rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
             }
         }
     }
@@ -141,15 +138,8 @@ public class PlayerControler : MonoBehaviour
         rb.linearVelocity = Vector2.zero; // Resetea la fuerza de rebote
     }
 
-    // -------------------- Ataque --------------------
-    /*public void Atacando()
-    {
-        if (timer <= 0f)
-        {
-            atacando = true;
-            timer = cooldown;
-        }
-    }*/
+    // -------------- Ataque ---------------
+  
     public void Atacar(int direccion)
     {
         if (timer <= 0f)
@@ -174,8 +164,39 @@ public class PlayerControler : MonoBehaviour
     {
         atacando = false;
     }
+    // --------------Mejoras---------------
+    public void MejorarSalud(int cantidad)
+    {
+        vidaMaxima += cantidad;          // aumenta el límite
+        vida = vidaMaxima;               // opcional: llenar la vida al máximo
+    }
+    public void MejorarDanio(int cantidad)
+    {
+        damage += cantidad; // aumenta el daño
+    }
+    public void Revivir(Vector3 nuevaPosicion)
+    {
+        // 1. Restaurar vida al máximo
+        vida = vidaMaxima;
 
-    // -------------------- Gizmos --------------------
+        // 2. Resetear estado
+        muerto = false;
+        recibiendoDanio = false;
+
+        // 3. Teletransportar a la posición inicial
+        transform.position = nuevaPosicion;
+
+        // 4. Asegurar que el Rigidbody esté en reposo (opcional, pero útil)
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        // 5. Opcional: Resetear la escala si se había volteado
+        transform.localScale = new Vector3(1, 1, 1);
+    }
+    //------------- Gizmos ----------------
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;

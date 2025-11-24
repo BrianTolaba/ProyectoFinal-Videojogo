@@ -2,19 +2,37 @@ using UnityEngine;
 
 public class Moneda : MonoBehaviour
 {
-
+    private bool spawning;
+    private bool recogido;
     public Animator animator;
+    
 
-   
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     private void Update()
     {
-        //animator.SetBool("Spawning", true);
+        animator.SetBool("Recogido", recogido);
+        animator.SetBool("Spawning", spawning);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            PlayerControler playerControler = collision.GetComponent<PlayerControler>();
+            if (playerControler != null) { 
+            playerControler.money += 1;
+                recogido = true;
+            }
+            
         }
+    }
+
+    public void DeleteObj()
+    {
+        Destroy(gameObject);
     }
 }

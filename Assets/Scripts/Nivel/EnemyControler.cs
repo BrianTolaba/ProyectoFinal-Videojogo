@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyControler : MonoBehaviour
 {
     //public---------------------------------
-    public Transform player;
+    //[SerializeField] public Transform player;
     public float detectionRadius = 5.0f;
     public float speed = 2.0f;
     public float fuerzaRebote = 2f;
@@ -13,6 +13,7 @@ public class EnemyControler : MonoBehaviour
     public float delayAtaque = 0.5f; //****
     //private----------------------------------
     private Rigidbody2D rb;
+    private Transform player;
     private Vector2 movement;
     private bool playerVivo;
     private bool muerto;
@@ -28,6 +29,10 @@ public class EnemyControler : MonoBehaviour
         playerVivo = true;
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj != null)
+            player = playerObj.transform;
     }
 
 
@@ -79,7 +84,7 @@ public class EnemyControler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Vector2 direccionDanio = new Vector2(transform.position.x, transform.position.y);
+            Vector2 direccionDanio = (player.position - transform.position).normalized;
             PlayerControler playerScript = collision.gameObject.GetComponent<PlayerControler>();
             
             playerScript.RecibeDanio(direccionDanio, 1);
@@ -135,8 +140,15 @@ public class EnemyControler : MonoBehaviour
         PlayerControler playerScript = player.GetComponent<PlayerControler>();
         if (playerScript != null)
         {
-            Vector2 direccion = (player.position - transform.position).normalized; //tambien hace falta aqui abajo
-            playerScript.RecibeDanio(direccion, 1);
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+            // Solo aplicar daño si sigue en rango
+            if (distanceToPlayer < rangoAtaque)
+            {
+                Vector2 direccionDanio = (player.position - transform.position).normalized; //tambien hace falta aqui abajo
+                playerScript.RecibeDanio(direccionDanio, 1);
+
+            }
         }
     }
 
@@ -150,8 +162,12 @@ public class EnemyControler : MonoBehaviour
     {
         if (collision.CompareTag("Espada")) //recibe danio de espada
         {
-            Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
-            RecibeDanio(direccionDanio, 1); //cantDanio = 1
+            PlayerControler playerScript = collision.GetComponentInParent<PlayerControler>();
+            if (playerScript != null)
+            {
+                Vector2 direccionDanio = new Vector2(collision.gameObject.transform.position.x, collision.gameObject.transform.position.y);
+                RecibeDanio(direccionDanio, playerScript.damage); //cantDanio = 1
+            }
         }
     }
     public void RecibeDanio(Vector2 direccion, int cantDanio)
