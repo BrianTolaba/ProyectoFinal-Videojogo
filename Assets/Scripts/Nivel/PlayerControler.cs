@@ -22,11 +22,12 @@ public class PlayerControler : MonoBehaviour
     private Rigidbody2D rb;
     private bool recibiendoDanio;
     private bool atacando;
-
+    private Vector3 posicionInicial;
     // -------------------- Unity Methods -------------
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        posicionInicial = transform.position;
     }
 
     private void Update()
@@ -173,7 +174,28 @@ public class PlayerControler : MonoBehaviour
     {
         damage += cantidad; // aumenta el daño
     }
+    public void Revivir(Vector3 nuevaPosicion)
+    {
+        // 1. Restaurar vida al máximo
+        vida = vidaMaxima;
 
+        // 2. Resetear estado
+        muerto = false;
+        recibiendoDanio = false;
+
+        // 3. Teletransportar a la posición inicial
+        transform.position = nuevaPosicion;
+
+        // 4. Asegurar que el Rigidbody esté en reposo (opcional, pero útil)
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+        }
+
+        // 5. Opcional: Resetear la escala si se había volteado
+        transform.localScale = new Vector3(1, 1, 1);
+    }
     //------------- Gizmos ----------------
     private void OnDrawGizmos()
     {
