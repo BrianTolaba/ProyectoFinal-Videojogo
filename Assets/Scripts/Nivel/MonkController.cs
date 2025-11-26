@@ -5,6 +5,7 @@ public class MonkController : MonoBehaviour
     public float detectionRadius = 5.0f;
     public int cantidadCuracion = 1;       // cuánto cura cada vez
     public int cantidadMejoraSalud = 5;    // cuánto aumenta la vida máxima
+    public OtherSoundController OtherSoundController;
 
     private Transform player;
     private bool curando;
@@ -36,6 +37,7 @@ public class MonkController : MonoBehaviour
             // Si tiene menos vida que el máximo, activar curación
             if (playerControler.vida < playerControler.vidaMaxima)
                 curando = true;
+            
             else
                 curando = false;
 
@@ -45,7 +47,7 @@ public class MonkController : MonoBehaviour
                 playerControler.MejorarSalud(cantidadMejoraSalud);
                 curando = true; // Inicia la animación de curar
                 playerControler.money -= 1;
-
+                OtherSoundController.PlayUpVidaSound();  //sonido del upgrade de vida
             }
         }
         else
@@ -64,6 +66,7 @@ public class MonkController : MonoBehaviour
         {
             playerControler.vida += cantidadCuracion;
             playerControler.vida = Mathf.Clamp(playerControler.vida, 0, playerControler.vidaMaxima);
+            OtherSoundController.PlayCuraSound();  // sonido de la cura
         }
     }
 

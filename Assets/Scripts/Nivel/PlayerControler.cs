@@ -15,6 +15,10 @@ public class PlayerControler : MonoBehaviour
     public int vidaMaxima = 10;
     public int money = 3;
     public int damage = 1;
+    public PlayerSoundController PlayerSoundController;
+    public bool step1 = false;  
+    public float timeByStep = 0.3f;
+    public float cont = 0f;
 
     // -------------------- Private -------------------
     private bool enSuelo;
@@ -81,12 +85,31 @@ public class PlayerControler : MonoBehaviour
     // ------------- Movimiento ---------------
     public void Movimiento()
     {
+       
         float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
         float velocidadY = Input.GetAxis("Vertical") * Time.deltaTime * velocidad;
 
         animator.SetFloat("MovementX", Mathf.Abs(velocidadX * velocidad));
         animator.SetFloat("MovementY", Mathf.Abs(velocidadY * velocidad));
 
+        if (velocidadX != 0 || velocidadY != 0 && !recibiendoDanio && !atacando)
+        {
+            cont += Time.deltaTime;
+            if (cont >= timeByStep)
+            {
+                cont = 0f;
+                if (!step1)
+                {
+                    PlayerSoundController.PlayMovimientoSound();
+                    step1 = true;
+                }
+                else
+                {
+                    PlayerSoundController.PlayMovimiento2Sound();
+                    step1 = false;
+                }
+            }
+        }
         // Flip horizontal
         if (velocidadX < 0)
         {
@@ -114,12 +137,15 @@ public class PlayerControler : MonoBehaviour
     {
         if (!recibiendoDanio) // Evita recibir daño demasiado rápido
         {
+            PlayerSoundController.PlayRecibirDañoSound(); // sonido de recibir danio
             recibiendoDanio = true;
             vida -= cantDanio;
 
             if (vida <= 0)
             {
+                PlayerSoundController.PlayMuerteSound();
                 muerto = true;
+                
                 if (GameManager.Instance != null)
                 {
                     GameManager.Instance.GameOver(); // Pantalla de game over
@@ -146,6 +172,8 @@ public class PlayerControler : MonoBehaviour
         {
             atacando = true;
             timer = cooldown;
+            PlayerSoundController.PlayVozSound();
+            PlayerSoundController.PlayAtaqueSound();
 
             // Dirección del ataque para el Animator
             animator.SetInteger("DireccionAtaque", direccion);

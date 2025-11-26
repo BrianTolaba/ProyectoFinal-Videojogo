@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Moneda : MonoBehaviour
 {
+    public OtherSoundController OtherSoundController;
     private bool spawning;
     private bool recogido;
     public Animator animator;
@@ -21,11 +22,17 @@ public class Moneda : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
+            
         {
             PlayerControler playerControler = collision.GetComponent<PlayerControler>();
-            if (playerControler != null) { 
+            
+            if (playerControler != null)
+                
+            { 
             playerControler.money += 1;
                 recogido = true;
+                OtherSoundController.PlayDineroSound(); // sonido recoger moneda
+
             }
             
         }
@@ -33,6 +40,7 @@ public class Moneda : MonoBehaviour
 
     public void DeleteObj()
     {
+        
         Destroy(gameObject);
     }
 }
