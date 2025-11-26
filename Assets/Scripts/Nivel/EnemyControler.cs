@@ -11,6 +11,9 @@ public class EnemyControler : MonoBehaviour
     public int vida = 3;
     public float rangoAtaque = 2;
     public float delayAtaque = 0.5f; //****
+    public OtherSoundController OtherSoundController;
+   
+
     //private----------------------------------
     private Rigidbody2D rb;
     private Transform player;
@@ -52,13 +55,16 @@ public class EnemyControler : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
+
         if (distanceToPlayer < detectionRadius)                                      // si la distancia con el jugador es menor al radio de deteccion
         {                                                                           // el enemigo se mueve en su direccion
             Vector2 direction = (player.position - transform.position).normalized; // restando sus cordenadas con las del objetivo
             if (direction.x < 0)
+                
             { transform.localScale = new Vector3(-1, 1, 1); }//cambio de orientacion del sprite
             if (direction.x > 0) { transform.localScale = new Vector3(1, 1, 1); }
             if (distanceToPlayer < rangoAtaque)
+
             {
                 movement = Vector2.zero;
                 enMovimiento = false;
@@ -86,7 +92,9 @@ public class EnemyControler : MonoBehaviour
         {
             Vector2 direccionDanio = (player.position - transform.position).normalized;
             PlayerControler playerScript = collision.gameObject.GetComponent<PlayerControler>();
-            
+            OtherSoundController.PlayEnemigoSound(); 
+
+
             playerScript.RecibeDanio(direccionDanio, 1);
             playerVivo = !playerScript.muerto;
             if (!playerVivo) //Se detiene si el jugador muere
@@ -99,12 +107,14 @@ public class EnemyControler : MonoBehaviour
     { 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
         if (distanceToPlayer < rangoAtaque && !atacando)
+
         {
             ataqueTimer += Time.deltaTime;
             if (ataqueTimer >= delayAtaque)
             {
                 Atacar();
                 ataqueTimer = 0f;
+                
             }
         }
         else 
@@ -132,8 +142,10 @@ public class EnemyControler : MonoBehaviour
         }
 
         animator.SetInteger("DireccionAtaque", dir);
+        OtherSoundController.PlayAtaqueEnemigoSound();         //sonido del ataque
+        
 
-       
+
     }
     public void AplicarDanio()
     {
@@ -141,12 +153,14 @@ public class EnemyControler : MonoBehaviour
         if (playerScript != null)
         {
             float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+            
 
             // Solo aplicar daño si sigue en rango
             if (distanceToPlayer < rangoAtaque)
             {
                 Vector2 direccionDanio = (player.position - transform.position).normalized; //tambien hace falta aqui abajo
                 playerScript.RecibeDanio(direccionDanio, 1);
+                
 
             }
         }
@@ -176,10 +190,12 @@ public class EnemyControler : MonoBehaviour
         {
             vida -= cantDanio;
             recibiendoDanio = true;//Quizas mover al else de abajo*********************************
+            OtherSoundController.PlayGritoEnemigoSound(); //sonido de recibir danio
             if (vida <= 0)
             {
                 muerto = true;
                 enMovimiento = false;//deja de moverse al morir
+                OtherSoundController.PlayMuerteEnemigoSound(); //sonido de muerte
             }
             else 
             { 

@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class BlacksmithController : MonoBehaviour
 {
+
     public float detectionRadius = 1.5f;
     public int cantidadMejoraDanio = 1;
     public int costoMejora = 2; // Aqui o mas tarde valor fijo
+    public OtherSoundController OtherSoundController;
 
     private Transform player;
     private PlayerControler playerControler;
     private Animator animator;
     private bool mejorando;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,12 +34,16 @@ public class BlacksmithController : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
         if (distanceToPlayer < detectionRadius)
+
         {
             if (Input.GetKeyDown(KeyCode.E) && playerControler.money >= costoMejora)
+                
             {
+                
                 playerControler.MejorarDanio(cantidadMejoraDanio);
                 playerControler.money -= costoMejora;
                 mejorando = true;
+                
             }
         }
         else
