@@ -4,19 +4,31 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject goblinPrefab;
+    [SerializeField] GameObject moneyPrefab;
     [SerializeField] int maxGoblins = 4;
     [SerializeField] float spawnCooldown = 3f;
     [SerializeField] float spawnRadius = 5f;   // radio máximo permitido alrededor de la casa
     [SerializeField] float areaX = 2f;         // ancho del área de spawn
     [SerializeField] float areaY = 2f;         // alto del área de spawn
+    [SerializeField] int vida = 5;             // vida de la choza
+    [SerializeField] Sprite spriteDestruida;   // imagen de la choza rota
 
     private float spawnTimer;
     private List<GameObject> goblins = new List<GameObject>();
+    private List<GameObject> money = new List<GameObject>();
+    private bool destruida = false;
+    private SpriteRenderer spriteRenderer;
 
+    void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     // Update is called once per frame
     void Update()
     {
+        // Si la choza está destruida, no hacemos nada más.
+        if (destruida) return;
 
         // limpiar lista de goblins muertos (Destroy los deja en null)
         goblins.RemoveAll(g => g == null);
@@ -47,10 +59,47 @@ public class EnemySpawner : MonoBehaviour
 
 
     }
-    private void OnDrawGizmosSelected() //Ver rango de busqueda del player
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, spawnRadius);
+        // Si ya está destruida, ignoramos golpes
+        if (destruida) return;
+
+        if (collision.CompareTag("Espada"))
+        {
+            // Buscamos el script del jugador para saber cuánto daño hace
+            PlayerControler playerScript = collision.GetComponentInParent<PlayerControler>();
+
+            if (playerScript != null)
+            {
+                // La choza no necesita dirección de empuje, así que solo pasamos el daño
+                RecibirDanio(playerScript.damage); // Asumiendo que 'damage' es public en Player
+            }
+        }
+    }
+    public void RecibirDanio(int cantidad)
+    {
+        vida -= cantidad;
+
+        // Feedback visual simple (Opcional: podrías hacer que parpadee rojo aquí)
+
+        if (vida <= 0)
+        {
+            DestruirChoza();
+        }
+    }
+    void DestruirChoza()
+    {
+        destruida = true;
+
+        // Cambiar el Sprite
+        if (spriteRenderer != null && spriteDestruida != null)
+        {
+            spriteRenderer.sprite = spriteDestruida;
+            GameObject newMoney = Instantiate(moneyPrefab, new Vector3(transform.position.x, transform.position.y -2, 0), Quaternion.identity);
+            money.Add(newMoney);
+        }
+
+        Debug.Log("¡La choza ha sido destruida!");
     }
     
     void SpawnGoblin()
@@ -61,5 +110,12 @@ public class EnemySpawner : MonoBehaviour
         GameObject newGoblin = Instantiate(goblinPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity);
         goblins.Add(newGoblin);
     }
+    private void OnDrawGizmosSelected() //Ver rango de busqueda del player
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, spawnRadius);
 
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(transform.position, new Vector3(areaX * 2, areaY * 2, 1));
+    }
 }
