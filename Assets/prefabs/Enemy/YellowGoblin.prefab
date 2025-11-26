@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1811025193973091161}
   - component: {fileID: 992348159330255720}
   m_Layer: 6
-  m_Name: Enemy 1
+  m_Name: YellowGoblin
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 87254520870004070}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.16, y: 1.91, z: 0.087696396}
+  m_LocalPosition: {x: 17.284, y: 3.985, z: 0.087696396}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 6107057360393665756, guid: 305c8a4987bc12d4e9a7e9c08d97cf20, type: 3}
+  m_Sprite: {fileID: 2124221226, guid: bf3f0b78b61df684eb8de3a250e585cf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -146,7 +146,7 @@ Animator:
   m_GameObject: {fileID: 87254520870004070}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cf7fd7b678d9a554eac78e7d473dd390, type: 2}
+  m_Controller: {fileID: 9100000, guid: 39a8ed06c35131244b05790b06ee5328, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
