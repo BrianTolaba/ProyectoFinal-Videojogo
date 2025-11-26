@@ -12,19 +12,24 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float areaY = 2f;         // alto del área de spawn
     [SerializeField] int vida = 5;             // vida de la choza
     [SerializeField] Sprite spriteDestruida;   // imagen de la choza rota
+    [Header("Audio")]
+    [SerializeField] AudioClip sonidoGolpe;
+    [SerializeField] AudioClip sonidoDestruccion;
 
     private float spawnTimer;
     private List<GameObject> goblins = new List<GameObject>();
     private List<GameObject> money = new List<GameObject>();
     private bool destruida = false;
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+    private float variacionPitch = 0.2f;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         // Si la choza está destruida, no hacemos nada más.
@@ -54,11 +59,8 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnTimer = spawnCooldown; // reset si está completo
         }
-
-
-
-
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // Si ya está destruida, ignoramos golpes
@@ -71,22 +73,27 @@ public class EnemySpawner : MonoBehaviour
 
             if (playerScript != null)
             {
-                // La choza no necesita dirección de empuje, así que solo pasamos el daño
-                RecibirDanio(playerScript.damage); // Asumiendo que 'damage' es public en Player
+                RecibirDanio(playerScript.damage);
             }
         }
     }
+
     public void RecibirDanio(int cantidad)
     {
         vida -= cantidad;
 
-        // Feedback visual simple (Opcional: podrías hacer que parpadee rojo aquí)
+        if (audioSource != null && sonidoGolpe != null)
+        {
+            audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+            audioSource.PlayOneShot(sonidoGolpe);
+        }
 
         if (vida <= 0)
         {
             DestruirChoza();
         }
     }
+
     void DestruirChoza()
     {
         destruida = true;
@@ -98,7 +105,11 @@ public class EnemySpawner : MonoBehaviour
             GameObject newMoney = Instantiate(moneyPrefab, new Vector3(transform.position.x, transform.position.y -2, 0), Quaternion.identity);
             money.Add(newMoney);
         }
-
+        if (audioSource != null && sonidoDestruccion != null)
+        {
+            audioSource.pitch = 1f;
+            audioSource.PlayOneShot(sonidoDestruccion);
+        }
         Debug.Log("¡La choza ha sido destruida!");
     }
     
@@ -110,6 +121,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject newGoblin = Instantiate(goblinPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity);
         goblins.Add(newGoblin);
     }
+
     private void OnDrawGizmosSelected() //Ver rango de busqueda del player
     {
         Gizmos.color = Color.red;
