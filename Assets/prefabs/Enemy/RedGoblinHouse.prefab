@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25639e008dc35014591290b54213ee3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goblinPrefab: {fileID: 87254520870004070, guid: 503d0858431c48743a5fe9e1af0c7cdc, type: 3}
+  goblinPrefab: {fileID: 87254520870004070, guid: 80338428652b4064bb08316cd8243488, type: 3}
   moneyPrefab: {fileID: 3537893146261605978, guid: 783170a70e5521d4eadb94db781cca80, type: 3}
   maxGoblins: 3
   spawnCooldown: 6
