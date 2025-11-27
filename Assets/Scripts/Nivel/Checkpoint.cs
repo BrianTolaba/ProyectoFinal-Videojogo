@@ -2,30 +2,27 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    public Transform puntoDeReaparicion; // El punto exacto donde reaparecerá el jugador.
-    // Una variable para controlar si este checkpoint ya ha sido activado.
-    private bool activado = false;
+    [Header("Configuración")]
+    [SerializeField] private Transform puntoDeReaparicion; // El punto exacto donde reaparecera el jugador
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Asegúrate de que solo se active si el objeto que entra es el jugador
-        if (other.CompareTag("Player")) // Ya no chequeamos por 'activado'
+        if (other.CompareTag("Player"))                                                      // Verificar si es el jugador
         {
-            // OBTENER la instancia del GameManager
-            GameManager gm = GameManager.Instance;
-
-            // Llama al GameManager para actualizar la posición de reaparición.
-            if (gm != null)
+            if (GameManager.Instance != null)                                                // Verificar si existe el GameManager
             {
-                if (puntoDeReaparicion != null)
+                if (puntoDeReaparicion != null)                                              // Verificar si existe puntoDeReaparicion
                 {
-                    gm.EstablecerCheckpoint(puntoDeReaparicion.position);
-                    Debug.Log("Checkpoint activado. Reaparición en: " + puntoDeReaparicion.position);
+                    GameManager.Instance.EstablecerCheckpoint(puntoDeReaparicion.position);  // Utiliza el metodo EstablecerCheckpoint de GameManager
                 }
                 else
                 {
-                    Debug.LogError("Error en Checkpoint: 'puntoDeReaparicion' no está asignado en el Inspector.");
+                    Debug.LogError("Error en Checkpoint: 'puntoDeReaparicion' no está asignado en el Inspector");
                 }
+            }
+            else
+            {
+                Debug.LogWarning("Error en Checkpoint: ¡No se encontró el GameManager en la escena!");
             }
         }
     }
