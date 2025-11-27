@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goblinPrefab: {fileID: 87254520870004070, guid: d757c420789a29d41a093263edcb0ec7, type: 3}
   moneyPrefab: {fileID: 3537893146261605978, guid: 783170a70e5521d4eadb94db781cca80, type: 3}
-  maxGoblins: 3
-  spawnCooldown: 6
+  maxGoblins: 7
+  spawnCooldown: 3
   spawnRadius: 5
   areaX: 2
   areaY: 2

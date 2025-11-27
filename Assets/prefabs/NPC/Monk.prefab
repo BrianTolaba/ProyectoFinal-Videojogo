@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebd59f3e4300324b8ca5152aba17298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 2.5
+  detectionRadius: 1.5
   cantidadCuracion: 1
   cantidadMejoraSalud: 5
   costoMejora: 2

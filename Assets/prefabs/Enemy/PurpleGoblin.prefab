@@ -53,8 +53,8 @@ MonoBehaviour:
   detectionRadius: 4.21
   speed: 6.01
   fuerzaRebote: 6.16
-  vida: 3
-  rangoAtaque: 1.84
+  vida: 2
+  rangoAtaque: 1.5
   delayAtaque: 1
   OtherSoundController: {fileID: 2248400625526062209}
   danioAntorcha: 1
