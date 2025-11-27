@@ -63,6 +63,7 @@ public class PlayerControler : MonoBehaviour
 
             // Ataque
             //if (Input.GetKeyDown(KeyCode.U) && !atacando){Atacando();}
+            if (Time.timeScale == 0f) return;             // Si el tiempo esta detenido no devuelve nada (no se puede hacer nada)
 
             if (Input.GetKeyDown(KeyCode.U) && !atacando) // Arriba
                 Atacar(0);
