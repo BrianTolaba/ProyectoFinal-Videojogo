@@ -13,7 +13,7 @@ public class PauseGame : MonoBehaviour
             AlternarPausa();
         }
     }
-    private void AlternarPausa()
+    public void AlternarPausa()
     {
         if (juegoPausado)
         {

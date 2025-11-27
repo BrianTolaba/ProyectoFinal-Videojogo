@@ -22,7 +22,7 @@ public class Checkpoint : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Error en Checkpoint: ¡No se encontró el GameManager en la escena!");
+                Debug.LogWarning("Error en Checkpoint: No se encontro el GameManager en la escena");
             }
         }
     }
