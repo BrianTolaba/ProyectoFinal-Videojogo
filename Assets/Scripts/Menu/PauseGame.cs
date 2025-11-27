@@ -10,14 +10,18 @@ public class PauseGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))      // Si Escape fue precionado alterna entre
         {
-            if (juegoPausado)
-            {
-                Reanudar();
-            }
-            else 
-            {
-                Pausar();
-            }
+            AlternarPausa();
+        }
+    }
+    private void AlternarPausa()
+    {
+        if (juegoPausado)
+        {
+            Reanudar();
+        }
+        else
+        {
+            Pausar();
         }
     }
 
