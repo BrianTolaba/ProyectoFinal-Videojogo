@@ -196,6 +196,7 @@ public class EnemyControler : MonoBehaviour
                 muerto = true;
                 enMovimiento = false;//deja de moverse al morir
                 OtherSoundController.PlayMuerteEnemigoSound(); //sonido de muerte
+                rb.linearVelocity = Vector2.zero;
             }
             else 
             { 
