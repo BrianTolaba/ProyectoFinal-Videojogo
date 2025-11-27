@@ -2,11 +2,10 @@ using UnityEngine;
 
 public class BlacksmithController : MonoBehaviour
 {
-
-    public float detectionRadius = 1.5f;
-    public int cantidadMejoraDanio = 1;
-    public int costoMejora = 2; // Aqui o mas tarde valor fijo
-    public OtherSoundController OtherSoundController;
+    [SerializeField] float detectionRadius = 1.5f;
+    [SerializeField] int cantidadMejoraDanio = 1;
+    [SerializeField] int costoMejora = 2; // Aqui o mas tarde valor fijo
+    [SerializeField] OtherSoundController OtherSoundController;
 
     private Transform player;
     private PlayerControler playerControler;

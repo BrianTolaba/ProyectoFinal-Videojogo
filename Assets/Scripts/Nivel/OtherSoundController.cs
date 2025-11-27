@@ -3,51 +3,59 @@ using UnityEngine;
 public class OtherSoundController : MonoBehaviour
 {
     public AudioSource audioSource;
-    public AudioClip sonidoDinero;
-    public AudioClip sonidoAtaqueEnemigo;
-    public AudioClip sonidoEnemigo;
-    public AudioClip sonidoCura;
-    public AudioClip sonidoUpVida;
-    public AudioClip sonidoHerrero;
-    public AudioClip sonidoSacerdote;
-    public AudioClip sonidoGritoEnemigo;
-    public AudioClip muerteEnemigo; 
+    [Header("Money")]
+    public AudioClip soundMoney;
+    [Header("Enemy")]
+    public AudioClip soundEnemyAttack;
+    public AudioClip soundEnemyVoice;
+    public AudioClip soundEnemyDamage;
+    public AudioClip soundEnemyDead;
+    [Header("Monk")]
+    public AudioClip soundHealing;
+    public AudioClip soundUpLife;
+    [Header("Blacksmith")]
+    public AudioClip soundBlacksmithWorking;
+    private float variacionPitch = 0.05f;
 
     public void PlayDineroSound()
     {
-        audioSource.PlayOneShot(sonidoDinero);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundMoney);
     }
     public void PlayAtaqueEnemigoSound()
     {
-        audioSource.PlayOneShot(sonidoAtaqueEnemigo);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundEnemyAttack);
     }
     public void PlayEnemigoSound()
     {
-        audioSource.PlayOneShot(sonidoEnemigo);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundEnemyVoice);
     }
     public void PlayGritoEnemigoSound()
     {
-        audioSource.PlayOneShot(sonidoGritoEnemigo);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundEnemyDamage);
     }
     public void PlayMuerteEnemigoSound()
     {
-        audioSource.PlayOneShot(muerteEnemigo);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundEnemyDead);
     }
     public void PlayCuraSound()
     {
-        audioSource.PlayOneShot(sonidoCura);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundHealing);
     }
     public void PlayUpVidaSound()
     {
-        audioSource.PlayOneShot(sonidoUpVida);
-    }
-    public void PlaySacerdoteSound()
-    {
-        audioSource.PlayOneShot(sonidoSacerdote);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundUpLife);
     }
     public void PlayHerreroSound()
     {
-        audioSource.PlayOneShot(sonidoHerrero);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundBlacksmithWorking);
     }
 
 

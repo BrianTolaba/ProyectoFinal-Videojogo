@@ -100,12 +100,11 @@ public class PlayerControler : MonoBehaviour
                 cont = 0f;
                 if (!step1)
                 {
-                    PlayerSoundController.PlayMovimientoSound();
+                    PlayerSoundController.PlayMovementSound();
                     step1 = true;
                 }
                 else
                 {
-                    PlayerSoundController.PlayMovimiento2Sound();
                     step1 = false;
                 }
             }
@@ -137,13 +136,13 @@ public class PlayerControler : MonoBehaviour
     {
         if (!recibiendoDanio) // Evita recibir daño demasiado rápido
         {
-            PlayerSoundController.PlayRecibirDañoSound(); // sonido de recibir danio
+            PlayerSoundController.PlayDamageSound(); // sonido de recibir danio
             recibiendoDanio = true;
             vida -= cantDanio;
 
             if (vida <= 0)
             {
-                PlayerSoundController.PlayMuerteSound();
+                PlayerSoundController.PlayDeadSound();
                 muerto = true;
                 
                 if (GameManager.Instance != null)
@@ -172,8 +171,8 @@ public class PlayerControler : MonoBehaviour
         {
             atacando = true;
             timer = cooldown;
-            PlayerSoundController.PlayVozSound();
-            PlayerSoundController.PlayAtaqueSound();
+            PlayerSoundController.PlayAttackVoiceSound();
+            PlayerSoundController.PlayAttackSwordSound();
 
             // Dirección del ataque para el Animator
             animator.SetInteger("DireccionAtaque", direccion);

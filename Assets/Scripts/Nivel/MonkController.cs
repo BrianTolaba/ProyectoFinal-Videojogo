@@ -2,19 +2,24 @@ using UnityEngine;
 
 public class MonkController : MonoBehaviour
 {
-    public float detectionRadius = 5.0f;
-    public int cantidadCuracion = 1;       // cuánto cura cada vez
-    public int cantidadMejoraSalud = 5;    // cuánto aumenta la vida máxima
-    public OtherSoundController OtherSoundController;
+    [SerializeField] float detectionRadius = 5.0f;
+    [SerializeField] int cantidadCuracion = 1;       // cuánto cura cada vez
+    [SerializeField] int cantidadMejoraSalud = 5;    // cuánto aumenta la vida máxima
+    [SerializeField] int costoMejora = 2;            // costo de monedas para el aumenta de vida máxima
+    [SerializeField] OtherSoundController OtherSoundController;
 
     private Transform player;
     private bool curando;
     private Animator animator;
     private PlayerControler playerControler;
+    private SpriteRenderer spriteRenderer;
+    private Collider2D monkCollider;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        monkCollider = GetComponent<Collider2D>();
 
         // Buscar al Player por tag
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
@@ -28,6 +33,33 @@ public class MonkController : MonoBehaviour
     void Update()
     {
         if (playerControler == null || playerControler.muerto) return;
+        // Buscar enemigos en rango
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+        bool enemyNearby = false;
+        foreach (var col in colliders)
+        {
+            if (col.CompareTag("Enemy"))
+            {
+                enemyNearby = true;
+                break;
+            }
+        }
+
+        if (enemyNearby)
+        {
+            // Monk se "apaga" visualmente y deja de curar
+            curando = false;
+            animator.SetBool("Curando", false);
+            spriteRenderer.enabled = false;   // oculta sprite
+            monkCollider.enabled = false;     // desactiva colisiones si quieres
+            return;
+        }
+        else
+        {
+            // Monk reaparece cuando no hay enemigos
+            spriteRenderer.enabled = true;
+            monkCollider.enabled = true;
+        }
 
         float distanceToPlayer = Vector2.Distance(transform.position, player.position);
 
@@ -46,7 +78,7 @@ public class MonkController : MonoBehaviour
             {
                 playerControler.MejorarSalud(cantidadMejoraSalud);
                 curando = true; // Inicia la animación de curar
-                playerControler.money -= 1;
+                playerControler.money -= costoMejora;
                 OtherSoundController.PlayUpVidaSound();  //sonido del upgrade de vida
             }
         }

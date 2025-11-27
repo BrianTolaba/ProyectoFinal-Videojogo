@@ -12,7 +12,7 @@ public class EnemyControler : MonoBehaviour
     public float rangoAtaque = 2;
     public float delayAtaque = 0.5f; //****
     public OtherSoundController OtherSoundController;
-   
+    public int danioAntorcha = 1;
 
     //private----------------------------------
     private Rigidbody2D rb;
@@ -159,7 +159,7 @@ public class EnemyControler : MonoBehaviour
             if (distanceToPlayer < rangoAtaque)
             {
                 Vector2 direccionDanio = (player.position - transform.position).normalized; //tambien hace falta aqui abajo
-                playerScript.RecibeDanio(direccionDanio, 1);
+                playerScript.RecibeDanio(direccionDanio, danioAntorcha);
                 
 
             }

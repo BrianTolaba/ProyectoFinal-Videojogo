@@ -20,6 +20,7 @@ public class EnemySpawner : MonoBehaviour
     private List<GameObject> goblins = new List<GameObject>();
     private List<GameObject> money = new List<GameObject>();
     private bool destruida = false;
+    private Collider2D col;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private float variacionPitch = 0.2f;
@@ -28,6 +29,7 @@ public class EnemySpawner : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
+        col = GetComponent<Collider2D>();
     }
 
     void Update()
@@ -102,8 +104,12 @@ public class EnemySpawner : MonoBehaviour
         if (spriteRenderer != null && spriteDestruida != null)
         {
             spriteRenderer.sprite = spriteDestruida;
-            GameObject newMoney = Instantiate(moneyPrefab, new Vector3(transform.position.x, transform.position.y -2, 0), Quaternion.identity);
+            GameObject newMoney = Instantiate(moneyPrefab, new Vector3(transform.position.x, transform.position.y - 1, 0), Quaternion.identity);
             money.Add(newMoney);
+        }
+        if (col != null)
+        {
+            col.enabled = false;
         }
         if (audioSource != null && sonidoDestruccion != null)
         {

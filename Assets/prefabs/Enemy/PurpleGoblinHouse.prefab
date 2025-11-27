@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 333335224156523330}
-  - component: {fileID: 8609818250574985046}
   - component: {fileID: 244300213794559349}
+  - component: {fileID: 8609818250574985046}
   - component: {fileID: 5917097690406899624}
   - component: {fileID: 5476187585419896381}
   m_Layer: 0
@@ -29,12 +29,35 @@ Transform:
   m_GameObject: {fileID: 8910585282333376066}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.34, y: 15.07, z: 0}
+  m_LocalPosition: {x: 19.71, y: 2.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &244300213794559349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8910585282333376066}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25639e008dc35014591290b54213ee3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goblinPrefab: {fileID: 87254520870004070, guid: d757c420789a29d41a093263edcb0ec7, type: 3}
+  moneyPrefab: {fileID: 3537893146261605978, guid: 783170a70e5521d4eadb94db781cca80, type: 3}
+  maxGoblins: 3
+  spawnCooldown: 6
+  spawnRadius: 5
+  areaX: 2
+  areaY: 2
+  vida: 5
+  spriteDestruida: {fileID: 21300000, guid: 3cc95ae26120260469458961ccbdd818, type: 3}
+  sonidoGolpe: {fileID: 8300000, guid: a3c3f191366bb95408ee73ec2cb4c7ed, type: 3}
+  sonidoDestruccion: {fileID: 8300000, guid: cd984cc7b11c199439e230ccc24318fc, type: 3}
 --- !u!212 &8609818250574985046
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,29 +113,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &244300213794559349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8910585282333376066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25639e008dc35014591290b54213ee3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  goblinPrefab: {fileID: 87254520870004070, guid: d757c420789a29d41a093263edcb0ec7, type: 3}
-  moneyPrefab: {fileID: 3537893146261605978, guid: 783170a70e5521d4eadb94db781cca80, type: 3}
-  maxGoblins: 3
-  spawnCooldown: 6
-  spawnRadius: 5
-  areaX: 2
-  areaY: 2
-  vida: 5
-  spriteDestruida: {fileID: 21300000, guid: 3cc95ae26120260469458961ccbdd818, type: 3}
-  sonidoGolpe: {fileID: 8300000, guid: a3c3f191366bb95408ee73ec2cb4c7ed, type: 3}
-  sonidoDestruccion: {fileID: 8300000, guid: cd984cc7b11c199439e230ccc24318fc, type: 3}
 --- !u!70 &5917097690406899624
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -147,8 +147,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.009865761, y: -0.28008556}
-  m_Size: {x: 1.3682461, y: 1.6658058}
+  m_Offset: {x: -0.015035629, y: -0.066434026}
+  m_Size: {x: 1.7850189, y: 1.9752696}
   m_Direction: 0
 --- !u!82 &5476187585419896381
 AudioSource:
@@ -171,7 +171,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.9705403
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

@@ -3,36 +3,37 @@ using UnityEngine;
 public class PlayerSoundController : MonoBehaviour
 {
     public AudioSource audioSource;
-    public AudioClip sonidoMov1;
-    public AudioClip sonidoVoz;
-    public AudioClip sonidoAtaque;
-    public AudioClip sonidoRecibirDaño;
-    public AudioClip sonidoMuerte;
-    public AudioClip sonidoMov2;
+    public AudioClip soundMovement;
+    public AudioClip soundAttackVoice;
+    public AudioClip soundAttackSword;
+    public AudioClip soundDamage;
+    public AudioClip soundDead;
+    private float variacionPitch = 0.05f;
 
-    public void PlayMovimientoSound()
+    public void PlayMovementSound()
     {
-        audioSource.PlayOneShot(sonidoMov1);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundMovement);
     }
-    public void PlayMovimiento2Sound()
+    public void PlayAttackVoiceSound()
     {
-        audioSource.PlayOneShot(sonidoMov2);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundAttackVoice);
     }
-    public void PlayVozSound()
+    public void PlayAttackSwordSound()
     {
-        audioSource.PlayOneShot(sonidoVoz);
+        audioSource.pitch = Random.Range(1f - variacionPitch, 1f + variacionPitch);
+        audioSource.PlayOneShot(soundAttackSword);
     }
-    public void PlayAtaqueSound()
+    public void PlayDamageSound()
     {
-        audioSource.PlayOneShot(sonidoAtaque);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundDamage);
     }
-    public void PlayRecibirDañoSound()
+    public void PlayDeadSound()
     {
-        audioSource.PlayOneShot(sonidoRecibirDaño);
-    }
-    public void PlayMuerteSound()
-    {
-        audioSource.PlayOneShot(sonidoMuerte);
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundDead);
     }
     public void StopSound()
     {
