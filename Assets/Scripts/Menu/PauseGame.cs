@@ -1,14 +1,14 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseGame : MonoBehaviour
 {
-    public GameObject menuPause;
+    [SerializeField] private GameObject menuPause; // Objeto menuPause del canvas
     public bool juegoPausado = false;
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))      // Si Escape fue precionado alterna entre
         {
             if (juegoPausado)
             {
@@ -18,34 +18,30 @@ public class PauseGame : MonoBehaviour
             {
                 Pausar();
             }
-            
         }
-
     }
+
     public void Reanudar() 
     {
-        menuPause.SetActive(false);
-        Time.timeScale = 1;
+        menuPause.SetActive(false);               // Desactiva el canvas menuPause
+        Time.timeScale = 1;                       // El tiempo vuelve a la normalidad
+        AudioListener.pause = false;              // Reactiva el sonido
         juegoPausado = false;
 
     }
+
     public void Pausar()
     {
-        menuPause.SetActive(true);
-        Time.timeScale = 0;
+        menuPause.SetActive(true);               // Activa el canvas menuPause
+        Time.timeScale = 0;                      // El tiempo se detiene
+        AudioListener.pause = true;              // Pausa todo el sonido del juego
         juegoPausado = true;
     }
 
     public void IrAlMenu()
     {
-        SceneManager.LoadScene("MenuPrincipal");
-        Reanudar(); //evita que se quede en pausa al mover entre escenas
-    }
-
-    public void IrAlSelector()
-    {
-        SceneManager.LoadScene("SelectorDeEscenas");
-        Reanudar(); //evita que se quede en pausa al mover entre escenas
+        Reanudar();                              // Evita que se quede en pausa al cambiar entre escenas
+        SceneManager.LoadScene("MenuPrincipal"); // Carga la escena
     }
 }
 
