@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class PlayerSoundController : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioClip soundMovement;
-    public AudioClip soundAttackVoice;
-    public AudioClip soundAttackSword;
-    public AudioClip soundDamage;
-    public AudioClip soundDead;
-    private float variacionPitch = 0.05f;
+    [Header("Configuracion")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private float variacionPitch = 0.05f;
+
+    [Header("Clips de Audio")]
+    [SerializeField] private AudioClip soundMovement;
+    [SerializeField] private AudioClip soundAttackVoice;
+    [SerializeField] private AudioClip soundAttackSword;
+    [SerializeField] private AudioClip soundDamage;
+    [SerializeField] private AudioClip soundDead;
 
     public void PlayMovementSound()
     {
@@ -39,7 +42,4 @@ public class PlayerSoundController : MonoBehaviour
     {
         audioSource.Stop();
     }
-
-
-
 }

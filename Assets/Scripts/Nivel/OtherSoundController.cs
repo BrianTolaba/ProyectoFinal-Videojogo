@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class OtherSoundController : MonoBehaviour
 {
-    public AudioSource audioSource;
+    [Header("Configuracion")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private float variacionPitch = 0.05f;
+
     [Header("Money")]
-    public AudioClip soundMoney;
+    [SerializeField] private AudioClip soundMoney;
+
     [Header("Enemy")]
-    public AudioClip soundEnemyAttack;
-    public AudioClip soundEnemyVoice;
-    public AudioClip soundEnemyDamage;
-    public AudioClip soundEnemyDead;
+    [SerializeField] private AudioClip soundEnemyAttack;
+    [SerializeField] private AudioClip soundEnemyVoice;
+    [SerializeField] private AudioClip soundEnemyDamage;
+    [SerializeField] private AudioClip soundEnemyDead;
+
     [Header("Monk")]
-    public AudioClip soundHealing;
-    public AudioClip soundUpLife;
+    [SerializeField] private AudioClip soundHealing;
+    [SerializeField] private AudioClip soundUpLife;
+
     [Header("Blacksmith")]
-    public AudioClip soundBlacksmithWorking;
-    private float variacionPitch = 0.05f;
+    [SerializeField] private AudioClip soundBlacksmithWorking;
 
     public void PlayDineroSound()
     {
@@ -57,6 +62,4 @@ public class OtherSoundController : MonoBehaviour
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(soundBlacksmithWorking);
     }
-
-
 }

@@ -5,21 +5,23 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
+    public static GameManager Instance;        // Permite acceder a este script desde cualquier otro con GameManager.Instance
 
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI gameOverText;
-    public Button reiniciarButton;
-    public Button menuButton;
-    //private PlayerControler playerControler;
-    public PlayerControler playerControler;
+    [Header("Referencias al Jugador")]
+    [SerializeField] private PlayerControler playerControler;
+
+    [Header("Interfaz de Usuario (UI)")]
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private TextMeshProUGUI gameOverText;
+    [SerializeField] private Button reiniciarButton;
+    [SerializeField] private Button menuButton;
+
     private bool gameOverActivo = false;
-
     private Vector3 posicionReaparicion;
 
-    void Awake()
+    private void Awake()
     {
-        if(Instance == null)
+        if(Instance == null)     // Configuración del patrón Singleton
         {
             Instance = this;
         }
@@ -29,39 +31,21 @@ public class GameManager : MonoBehaviour
         }
         
     }
-    void Start()
+
+    private void Start()
     {
-
-        //playerControler = player.GetComponent<PlayerControler>();
-        if (gameOverPanel != null)
-            gameOverPanel.SetActive(false);
-
-        if (reiniciarButton != null)
-            reiniciarButton.onClick.AddListener(ReiniciarEscena);
-
-        if (menuButton != null)
-            menuButton.onClick.AddListener(IrAlMenu);
-        if (playerControler == null)
-        {
-            playerControler = FindObjectOfType<PlayerControler>();
-        }
-
-        if (playerControler != null && posicionReaparicion == Vector3.zero) // Solo si no se ha establecido
-        {
-            posicionReaparicion = playerControler.transform.position;
-        }
+        InicializarJugador();
+        InicializarUI();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (gameOverActivo)
+        if (gameOverActivo)                                                          // Solo leer imputs si es GameOver
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
                 ReiniciarEscena();
             }
-
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M))
             {
                 IrAlMenu();   
@@ -69,56 +53,73 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void GameOver()
+    private void InicializarJugador()
     {
-        if (gameOverActivo) return;
-
-        gameOverActivo = true;
-
-        if (gameOverPanel != null)
+        if (playerControler == null)                                                // Si no se asigno el jugador manualmnete, se lo busca
         {
-            gameOverPanel.SetActive(true);
+            playerControler = FindObjectOfType<PlayerControler>();
         }
-        Time.timeScale = 0f;
-        if (gameOverText != null)
+        if (playerControler != null && posicionReaparicion == Vector3.zero)         // Establece el primer checkpoint en la posición inicial del jugador
         {
-            gameOverText.text = "GAME OVER\n\nR - Reiniciar \nESC - Menu Principal";
+            posicionReaparicion = playerControler.transform.position;
+        }
+        else
+        {
+            Debug.LogError("Error en GameManager: No se encontro al PlayerControler en la escena");
         }
     }
+
+    private void InicializarUI()
+    {
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(false);
+        if (reiniciarButton != null)
+            reiniciarButton.onClick.AddListener(ReiniciarEscena);
+        if (menuButton != null)
+            menuButton.onClick.AddListener(IrAlMenu);
+    }
+
     public void EstablecerCheckpoint(Vector3 nuevaPosicion)
     {
         posicionReaparicion = nuevaPosicion;
     }
 
-    public void ReiniciarEscena() //reinicia la escena
+    public void GameOver()
     {
-        /*
-        Time.timeScale = 1f;
-        //playerControler.vida = 5;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); //(SceneManager.LoadScene) = carga la Escena y (SceneManger.GetActiveScene().name) = obtine el nombre de la escena actual
-        */
+        if (gameOverActivo) return;              // Evita que se llame múltiples veces
+
+        gameOverActivo = true;
+        Time.timeScale = 0f;                     // Pausa el juego
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);       // Activa el canvas gameOverPanel
+        }
+        if (gameOverText != null)
+        {
+            gameOverText.text = "GAME OVER\n\nR - Reiniciar \nESC - Menu Principal";
+        }
+    }
+
+    public void ReiniciarEscena()
+    {
         if (playerControler == null)
         {
             Debug.LogError("El PlayerControler no está asignado en GameManager. ¡No se puede revivir!");
             return;
         }
+        Time.timeScale = 1f;                          // El tiempo vuelve a la normalidad
 
-        // 1. Revivir al personaje
-        playerControler.Revivir(posicionReaparicion);
-
-        // 2. Ocultar el panel de Game Over
         if (gameOverPanel != null)
         {
-            gameOverPanel.SetActive(false);
+            gameOverPanel.SetActive(false);           // Ocultar el panel de Game Over
         }
         gameOverActivo = false;
-
-        // 3. Reanudar el tiempo (si se detuvo)
-        Time.timeScale = 1f;
+        playerControler.Revivir(posicionReaparicion); // Revivir al personaje
     }
+
     public void IrAlMenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MenuPrincipal");
+        Time.timeScale = 1f;                          // El tiempo vuelve a la normalidad
+        SceneManager.LoadScene("MenuPrincipal");      // Carga la escena
     }
 }

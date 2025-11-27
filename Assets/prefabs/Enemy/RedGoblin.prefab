@@ -50,14 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d77674789338d4b96d38a62f1b7811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 4.21
-  speed: 6.01
-  fuerzaRebote: 6.16
-  vida: 3
-  rangoAtaque: 1.84
-  delayAtaque: 1
+  detectionRadius: 6
+  speed: 4
+  fuerzaRebote: 3
+  vida: 7
+  rangoAtaque: 1.5
+  delayAtaque: 2.5
   OtherSoundController: {fileID: -3317166065881628513}
-  danioAntorcha: 1
+  danioAntorcha: 3
 --- !u!114 &-3317166065881628513
 MonoBehaviour:
   m_ObjectHideFlags: 0

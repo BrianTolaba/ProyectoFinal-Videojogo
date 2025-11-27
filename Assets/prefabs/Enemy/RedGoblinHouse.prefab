@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 29.006453, y: 2.8830442, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -49,12 +49,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goblinPrefab: {fileID: 87254520870004070, guid: 80338428652b4064bb08316cd8243488, type: 3}
   moneyPrefab: {fileID: 3537893146261605978, guid: 783170a70e5521d4eadb94db781cca80, type: 3}
-  maxGoblins: 3
-  spawnCooldown: 6
+  maxGoblins: 1
+  spawnCooldown: 5
   spawnRadius: 5
   areaX: 2
   areaY: 2
-  vida: 5
+  vida: 7
   spriteDestruida: {fileID: 21300000, guid: 3cc95ae26120260469458961ccbdd818, type: 3}
   sonidoGolpe: {fileID: 8300000, guid: a3c3f191366bb95408ee73ec2cb4c7ed, type: 3}
   sonidoDestruccion: {fileID: 8300000, guid: cd984cc7b11c199439e230ccc24318fc, type: 3}
