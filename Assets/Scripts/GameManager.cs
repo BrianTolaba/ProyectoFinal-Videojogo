@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -12,11 +13,13 @@ public class GameManager : MonoBehaviour
 
     [Header("Interfaz de Usuario (UI)")]
     [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject winScreen;
     [SerializeField] private TextMeshProUGUI gameOverText;
     [SerializeField] private Button reiniciarButton;
     [SerializeField] private Button menuButton;
 
-    private bool gameOverActivo = false;
+    public bool gameOverActivo = false;
+    public bool winningActivo = false;
     private Vector3 posicionReaparicion;
 
     private void Awake()
@@ -50,6 +53,10 @@ public class GameManager : MonoBehaviour
             {
                 IrAlMenu();   
             }
+            if (winningActivo)
+            {
+                if (Input.GetKeyDown(KeyCode.Escape)) IrAlMenu();
+            }
         }
     }
 
@@ -73,6 +80,8 @@ public class GameManager : MonoBehaviour
     {
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
+        if (winScreen != null)
+            winScreen.SetActive(false);
         if (reiniciarButton != null)
             reiniciarButton.onClick.AddListener(ReiniciarEscena);
         if (menuButton != null)
@@ -84,9 +93,22 @@ public class GameManager : MonoBehaviour
         posicionReaparicion = nuevaPosicion;
     }
 
+    public void Winning()
+    {
+        if (winningActivo || gameOverActivo) return;
+
+        winningActivo = true;
+        Time.timeScale = 0f;
+        if (winScreen != null)
+        {
+            winScreen.SetActive(true);       // Activa el canvas winScreen
+        }
+        Debug.Log("¡VICTORIA!");
+    }
+
     public void GameOver()
     {
-        if (gameOverActivo) return;              // Evita que se llame múltiples veces
+        if (winningActivo || gameOverActivo) return;              // Evita que se llame múltiples veces
 
         gameOverActivo = true;
         Time.timeScale = 0f;                     // Pausa el juego
@@ -96,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
         if (gameOverText != null)
         {
-            gameOverText.text = "GAME OVER\n\nR - Reiniciar \nESC - Menu Principal";
+            gameOverText.text = "GAME OVER\n\nR - Revivir \nESC - Menu Principal";
         }
     }
 
