@@ -99,7 +99,7 @@ public class EnemySpawner : MonoBehaviour
     void DestruirChoza()
     {
         destruida = true;
-
+        gameObject.tag = "Untagged";
         // Cambiar el Sprite
         if (spriteRenderer != null && spriteDestruida != null)
         {
