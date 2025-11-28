@@ -12,7 +12,7 @@ public class MenuSystem : MonoBehaviour
     {
         Debug.Log("JuegoCerrado...");
         Application.Quit();                               // Cierra la aplicacion
-        UnityEditor.EditorApplication.isPlaying = false;  // Detiene el juego si se esta dentro del editor de Unity
+        //UnityEditor.EditorApplication.isPlaying = false;  // Detiene el juego si se esta dentro del editor de Unity
     }
 
 }

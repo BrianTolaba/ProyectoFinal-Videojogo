@@ -42,7 +42,16 @@ public class PlayerControler : MonoBehaviour
     private void Update()
     {
         // Reducir Cooldown de ataque
-        if (ataqueTimer > 0f) ataqueTimer -= Time.deltaTime;
+        if (ataqueTimer > 0f)
+        {
+            ataqueTimer -= Time.deltaTime;
+        }
+        else if (atacando)
+        {
+            // Si el tiempo del cooldown ya llegó a 0, pero la variable 'atacando' sigue en true, significa que Unity se saltó el evento de animacion. Lo forzamos a false manualmente.
+            DesactivaAtacando();
+            Debug.Log("Bug Animacion");
+        }
 
         // Si esta muerto o en pausa, no hace nada
         if (muerto || Time.timeScale == 0f) return;
