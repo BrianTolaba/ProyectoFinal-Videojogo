@@ -6,6 +6,7 @@ public class BlacksmithController : MonoBehaviour
     [SerializeField] float detectionRadius = 1.5f;
     [SerializeField] int cantidadMejoraDanio = 1;
     [SerializeField] int costoMejora = 2;
+    [SerializeField] int maximaMejora = 3;
 
     [Header("Referencias")]
     [SerializeField] OtherSoundController OtherSoundController;
@@ -56,7 +57,7 @@ public class BlacksmithController : MonoBehaviour
 
     private void IntentarMejorar()
     {
-        if (playerControler.money >= costoMejora)
+        if (playerControler.money >= costoMejora && playerControler.damage < maximaMejora)
         {
             // Cobrar y Mejorar
             playerControler.money -= costoMejora;
@@ -68,7 +69,8 @@ public class BlacksmithController : MonoBehaviour
         }
         else
         {
-            Debug.Log("No tienes suficiente dinero.");
+            OtherSoundController.PlayNoDineroSound();
+            Debug.Log("No tienes suficiente dinero o maximo de mejora");
         }
     }
 

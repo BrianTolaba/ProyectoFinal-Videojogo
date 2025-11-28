@@ -2,235 +2,215 @@ using UnityEngine;
 
 public class PlayerControler : MonoBehaviour
 {
-    // -------------------- Public --------------------
-    public float velocidad = 5f;
+    [Header("Estadisticas del Jugador")]
     public int vida = 3;
-    public float fuerzaSalto = 10f;
-    public float fuerzaRebote = 10f;
-    public float longitudRaycast = 0.1f;
-    public LayerMask capaSuelo;
-    public bool muerto;
-    public Animator animator;
-    public float cooldown = 2f;
     public int vidaMaxima = 10;
     public int money = 3;
     public int damage = 1;
-    public PlayerSoundController PlayerSoundController;
-    public bool step1 = false;  
-    public float timeByStep = 0.3f;
-    public float cont = 0f;
+    public bool muerto;
 
-    // -------------------- Private -------------------
-    private bool enSuelo;
-    private float timer;
+    [Header("Movimiento y Fisica")]
+    public float velocidad = 5f;
+    public float fuerzaRebote = 10f;
+    
+    [Header("Combate")]
+    public float cooldown = 2f;
+
+    [Header("Audio y Pasos")]
+    public PlayerSoundController PlayerSoundController; 
+    public float timeByStep = 0.3f;
+
     private Rigidbody2D rb;
+    private Animator animator;
+
+    private float inputX;
+    private float inputY;
+
     private bool recibiendoDanio;
     private bool atacando;
-    private Vector3 posicionInicial;
-    // -------------------- Unity Methods -------------
-    void Start()
+
+    private float ataqueTimer;
+    private float pasoTimer = 0f;
+    private bool pasoAlternado = false;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        posicionInicial = transform.position;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if (timer > 0f)
-        {timer -= Time.deltaTime;}
+        // Reducir Cooldown de ataque
+        if (ataqueTimer > 0f) ataqueTimer -= Time.deltaTime;
 
-        if (!muerto) // Si no está muerto: movimiento, salto y ataque
+        // Si esta muerto o en pausa, no hace nada
+        if (muerto || Time.timeScale == 0f) return;
+
+        // Leer Inputs (Teclado)
+        inputX = Input.GetAxisRaw("Horizontal");
+        inputY = Input.GetAxisRaw("Vertical");
+
+        // Logica de acciones
+        if (!atacando && !recibiendoDanio)
         {
-            if (!atacando) // Si no está atacando: movimiento y salto
-            {
-                Movimiento();
-
-                // Raycast hacia abajo para detectar suelo
-                RaycastHit2D hit = Physics2D.Raycast(
-                    transform.position,
-                    Vector2.down,
-                    longitudRaycast,
-                    capaSuelo
-                );
-                enSuelo = hit.collider != null;
-
-                // Salto
-                if (enSuelo && Input.GetKeyDown(KeyCode.Space) && !recibiendoDanio)
-                {
-                    rb.AddForce(new Vector2(0f, fuerzaSalto), ForceMode2D.Impulse);
-                }
-            }
-
-            // Ataque
-            //if (Input.GetKeyDown(KeyCode.U) && !atacando){Atacando();}
-            if (Time.timeScale == 0f) return;             // Si el tiempo esta detenido no devuelve nada (no se puede hacer nada)
-
-            if (Input.GetKeyDown(KeyCode.U) && !atacando) // Arriba
-                Atacar(0);
-            if (Input.GetKeyDown(KeyCode.J) && !atacando) // Abajo
-                Atacar(1);
-            if (Input.GetKeyDown(KeyCode.H) && !atacando) // Izquierda
-                Atacar(2);
-            if (Input.GetKeyDown(KeyCode.K) && !atacando) // Derecha
-                Atacar(3);
-
+            ProcesarAtaque();
         }
 
-        // ---------------- Animator --------
-        // animator.SetBool("ensuelo", enSuelo);
-        animator.SetBool("RecibeDanio", recibiendoDanio);
-        animator.SetBool("Atacando", atacando);
-        animator.SetBool("muerto", muerto);
+        // Actualizar animaciones
+        ActualizarAnimator();
     }
 
-    // ------------- Movimiento ---------------
-    public void Movimiento()
+    private void FixedUpdate()
     {
-       
-        float velocidadX = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
-        float velocidadY = Input.GetAxis("Vertical") * Time.deltaTime * velocidad;
-
-        animator.SetFloat("MovementX", Mathf.Abs(velocidadX * velocidad));
-        animator.SetFloat("MovementY", Mathf.Abs(velocidadY * velocidad));
-
-        if (velocidadX != 0 || velocidadY != 0 && !recibiendoDanio && !atacando)
+        // El movimiento físico va aquí para evitar "temblores"
+        if (!muerto && !atacando && !recibiendoDanio)
         {
-            cont += Time.deltaTime;
-            if (cont >= timeByStep)
+            MoverPersonaje();
+        }
+    }
+
+    // ------------------------------------------------ MOVIMIENTO ------------------------------------------------
+    private void MoverPersonaje()
+    {
+        // Mover el Rigidbody en X e Y
+        rb.linearVelocity = new Vector2(inputX * velocidad, inputY * velocidad);
+
+        // Sonido de pasos 
+        if (rb.linearVelocity.magnitude > 0.1f)
+        {
+            pasoTimer += Time.deltaTime;
+            if (pasoTimer >= timeByStep)
             {
-                cont = 0f;
-                if (!step1)
-                {
+                pasoTimer = 0f;
+                pasoAlternado = !pasoAlternado;
+                if (PlayerSoundController != null)
                     PlayerSoundController.PlayMovementSound();
-                    step1 = true;
-                }
-                else
-                {
-                    step1 = false;
-                }
             }
         }
-        // Flip horizontal
-        if (velocidadX < 0)
+        else
         {
-            transform.localScale = new Vector3(-1, 1, 1);
-        }
-        if (velocidadX > 0)
-        {
-            transform.localScale = new Vector3(1, 1, 1);
+            pasoTimer = 0f;
         }
 
-        // Movimiento directo (ojo: esto ignora física)
-        Vector3 posicion = transform.position;
-        if (!recibiendoDanio)
-        {
-            transform.position = new Vector3(
-                velocidadX + posicion.x,
-                velocidadY + posicion.y,
-                posicion.z
-            );
-        }
+        // Girar Sprite
+        if (inputX > 0) transform.localScale = new Vector3(1, 1, 1);
+        else if (inputX < 0) transform.localScale = new Vector3(-1, 1, 1);
     }
 
-    // ------------------- Daño ----------------
-    public void RecibeDanio(Vector2 direccion, int cantDanio)
+    // ------------------------------------------------ COMBATE ------------------------------------------------
+    private void ProcesarAtaque()
     {
-        if (!recibiendoDanio) // Evita recibir daño demasiado rápido
-        {
-            PlayerSoundController.PlayDamageSound(); // sonido de recibir danio
-            recibiendoDanio = true;
-            vida -= cantDanio;
+        if (ataqueTimer > 0) return;
 
-            if (vida <= 0)
-            {
-                PlayerSoundController.PlayDeadSound();
-                muerto = true;
-                
-                if (GameManager.Instance != null)
-                {
-                    GameManager.Instance.GameOver(); // Pantalla de game over
-                }
-            }
-            else
-            {
-                rb.AddForce(direccion * fuerzaRebote, ForceMode2D.Impulse);
-            }
-        }
+        // Detectar teclas de ataque
+        if (Input.GetKeyDown(KeyCode.U)) EjecutarAtaque(0);      // Arriba
+        else if (Input.GetKeyDown(KeyCode.J)) EjecutarAtaque(1); // Abajo
+        else if (Input.GetKeyDown(KeyCode.H)) EjecutarAtaque(2); // Izquierda
+        else if (Input.GetKeyDown(KeyCode.K)) EjecutarAtaque(3); // Derecha
     }
-
-    public void DesactivaDanio()
+    private void EjecutarAtaque(int direccion)
     {
-        recibiendoDanio = false;
-        rb.linearVelocity = Vector2.zero; // Resetea la fuerza de rebote
-    }
+        atacando = true;
+        ataqueTimer = cooldown;
 
-    // -------------- Ataque ---------------
-  
-    public void Atacar(int direccion)
-    {
-        if (timer <= 0f)
+        // Frena al personaje para que no deslice al pegar
+        rb.linearVelocity = Vector2.zero;
+
+        // Configurar animacion
+        animator.SetInteger("DireccionAtaque", direccion);
+
+        // Orientacion del sprite segun ataque
+        if (direccion == 2) transform.localScale = new Vector3(-1, 1, 1); // Izq
+        else if (direccion == 3) transform.localScale = new Vector3(1, 1, 1); // Der
+
+        // Sonidos
+        if (PlayerSoundController != null)
         {
-            atacando = true;
-            timer = cooldown;
             PlayerSoundController.PlayAttackVoiceSound();
             PlayerSoundController.PlayAttackSwordSound();
-
-            // Dirección del ataque para el Animator
-            animator.SetInteger("DireccionAtaque", direccion);
-
-            if (direccion == 2) // izquierda
-                transform.localScale = new Vector3(-1, 1, 1);
-            else if (direccion == 3) // derecha
-                transform.localScale = new Vector3(1, 1, 1);
-            // Detiene al jugador durante el ataque
-            rb.linearVelocity = Vector2.zero;
         }
     }
-
-
-    public void DesactivaAtacando()
+    public void DesactivaAtacando() // Evento de Animacion
     {
         atacando = false;
     }
-    // --------------Mejoras---------------
+
+    // ------------------------------------------------ DAÑO ------------------------------------------------
+    public void RecibeDanio(Vector2 direccionEmpuje, int cantidad)
+    {
+        if (recibiendoDanio || muerto) return;
+
+        recibiendoDanio = true;
+        vida -= cantidad;
+
+        if (PlayerSoundController != null)
+        {
+            PlayerSoundController.PlayDamageSound();
+        }
+
+        if (vida <= 0)
+        {
+            Morir();
+        }
+        else
+        {
+            // Empuje hacia atrás
+            rb.linearVelocity = Vector2.zero; // Reseta velocidad para un empuje limpio
+            rb.AddForce(direccionEmpuje * fuerzaRebote, ForceMode2D.Impulse);
+        }
+    }
+    private void Morir()
+    {
+        muerto = true;
+        if (PlayerSoundController != null) PlayerSoundController.PlayDeadSound();
+
+        rb.linearVelocity = Vector2.zero;
+        rb.isKinematic = true; // Desactivar física al morir
+
+        if (GameManager.Instance != null) // Pantalla de GameOver
+        {
+            GameManager.Instance.GameOver();
+        }
+    }
+    public void DesactivaDanio() // Evento de Animacion
+    {
+        recibiendoDanio = false;
+    }
+
+    // ------------------------------------------------ UTILIDADES ------------------------------------------------
+
     public void MejorarSalud(int cantidad)
     {
-        vidaMaxima += cantidad;          // aumenta el límite
-        vida = vidaMaxima;               // opcional: llenar la vida al máximo
+        vidaMaxima += cantidad;
+        vida = vidaMaxima;
     }
     public void MejorarDanio(int cantidad)
     {
-        damage += cantidad; // aumenta el daño
+        damage += cantidad;
     }
     public void Revivir(Vector3 nuevaPosicion)
     {
-        // 1. Restaurar vida al máximo
         vida = vidaMaxima;
-
-        // 2. Resetear estado
         muerto = false;
         recibiendoDanio = false;
+        atacando = false;
 
-        // 3. Teletransportar a la posición inicial
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector2.zero;
+
         transform.position = nuevaPosicion;
-
-        // 4. Asegurar que el Rigidbody esté en reposo (opcional, pero útil)
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.angularVelocity = 0f;
-        }
-
-        // 5. Opcional: Resetear la escala si se había volteado
-        transform.localScale = new Vector3(1, 1, 1);
+        transform.localScale = Vector3.one;
+        
+        animator.Rebind();                      // Reinicia el animator al estado base
     }
-    //------------- Gizmos ----------------
-    private void OnDrawGizmos()
+    private void ActualizarAnimator()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(
-            transform.position,
-            transform.position + Vector3.down * longitudRaycast
-        );
+        animator.SetFloat("MovementX", Mathf.Abs(inputX * velocidad));
+        animator.SetFloat("MovementY", Mathf.Abs(inputY * velocidad));
+
+        animator.SetBool("RecibeDanio", recibiendoDanio);
+        animator.SetBool("Atacando", atacando);
+        animator.SetBool("muerto", muerto);
     }
 }

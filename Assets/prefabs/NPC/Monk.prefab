@@ -50,10 +50,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bebd59f3e4300324b8ca5152aba17298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRadius: 1.5
+  detectionRadius: 4
   cantidadCuracion: 1
-  cantidadMejoraSalud: 5
+  cantidadMejoraSalud: 1
   costoMejora: 2
+  maximaMejora: 20
   OtherSoundController: {fileID: 5574387463330570650}
 --- !u!114 &5574387463330570650
 MonoBehaviour:
@@ -70,6 +71,7 @@ MonoBehaviour:
   audioSource: {fileID: -2612982112109794059}
   variacionPitch: 0.05
   soundMoney: {fileID: 0}
+  soundNoMoney: {fileID: 8300000, guid: 9350554eef29915419bc749d601e203c, type: 3}
   soundEnemyAttack: {fileID: 0}
   soundEnemyVoice: {fileID: 0}
   soundEnemyDamage: {fileID: 0}

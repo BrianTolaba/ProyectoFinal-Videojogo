@@ -2,18 +2,27 @@ using UnityEngine;
 
 public class MonkController : MonoBehaviour
 {
+    [Header("Configuración")]
     [SerializeField] float detectionRadius = 5.0f;
-    [SerializeField] int cantidadCuracion = 1;       // cuánto cura cada vez
-    [SerializeField] int cantidadMejoraSalud = 5;    // cuánto aumenta la vida máxima
-    [SerializeField] int costoMejora = 2;            // costo de monedas para el aumenta de vida máxima
+    [SerializeField] int cantidadCuracion = 1;
+
+    [Header("Mejora de Vida")]
+    [SerializeField] int cantidadMejoraSalud = 1;
+    [SerializeField] int costoMejora = 4;
+    [SerializeField] int maximaMejora = 20;
+
+    [Header("Referencias")]
     [SerializeField] OtherSoundController OtherSoundController;
 
     private Transform player;
-    private bool curando;
-    private Animator animator;
     private PlayerControler playerControler;
+    private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Collider2D monkCollider;
+
+    private bool curando;
+    private bool hayEnemigosCerca;
+    private float timerBusquedaEnemigos;
 
     void Start()
     {
@@ -21,7 +30,11 @@ public class MonkController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         monkCollider = GetComponent<Collider2D>();
 
-        // Buscar al Player por tag
+        if (OtherSoundController == null)
+        {
+            OtherSoundController = FindObjectOfType<OtherSoundController>();
+        }
+
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null)
         {
@@ -33,72 +46,114 @@ public class MonkController : MonoBehaviour
     void Update()
     {
         if (playerControler == null || playerControler.muerto) return;
-        // Buscar enemigos en rango
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
-        bool enemyNearby = false;
-        foreach (var col in colliders)
+        timerBusquedaEnemigos += Time.deltaTime;
+        if (timerBusquedaEnemigos >= 0.25f)
         {
-            if (col.CompareTag("Enemy"))
-            {
-                enemyNearby = true;
-                break;
-            }
+            BuscarEnemigos();
+            timerBusquedaEnemigos = 0f;
         }
 
-        if (enemyNearby)
+        // Comportamiento segun entorno
+        if (hayEnemigosCerca)
         {
-            // Monk se "apaga" visualmente y deja de curar
-            curando = false;
-            animator.SetBool("Curando", false);
-            spriteRenderer.enabled = false;   // oculta sprite
-            monkCollider.enabled = false;     // desactiva colisiones si quieres
-            return;
+            CambiarEstadoVisible(false); // Esconderse
         }
         else
         {
-            // Monk reaparece cuando no hay enemigos
-            spriteRenderer.enabled = true;
-            monkCollider.enabled = true;
-        }
-
-        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
-
-        // Si el jugador está en rango
-        if (distanceToPlayer < detectionRadius)
-        {
-            // Si tiene menos vida que el máximo, activar curación
-            if (playerControler.vida < playerControler.vidaMaxima)
-                curando = true;
-            
-            else
-                curando = false;
-
-            // Si presiona E, dar mejora de salud
-            if (Input.GetKeyDown(KeyCode.E)&&playerControler.money >=1)
-            {
-                playerControler.MejorarSalud(cantidadMejoraSalud);
-                curando = true; // Inicia la animación de curar
-                playerControler.money -= costoMejora;
-                OtherSoundController.PlayUpVidaSound();  //sonido del upgrade de vida
-            }
-        }
-        else
-        {
-            curando = false;
+            CambiarEstadoVisible(true);  // Aparecer
+            GestionarInteraccionJugador();
         }
 
         // Animators
         animator.SetBool("Curando", curando);
     }
 
-    // Animation Event al inicio del clip de curar
+    private void BuscarEnemigos()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
+        hayEnemigosCerca = false;
+
+        foreach (var col in colliders)
+        {
+            if (col.CompareTag("Enemy"))
+            {
+                hayEnemigosCerca = true;
+                break;
+            }
+        }
+    }
+
+    private void CambiarEstadoVisible(bool visible)
+    {
+        if (spriteRenderer.enabled != visible)
+        {
+            spriteRenderer.enabled = visible;
+            monkCollider.enabled = visible;
+
+            if (!visible)
+            {
+                curando = false;                    // Si se esconde y deja de curar
+            }
+        }
+    }
+
+    private void GestionarInteraccionJugador()
+    {
+        float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+        if (distanceToPlayer < detectionRadius)
+        {
+            // Curacion automatica
+            if (playerControler.vida < playerControler.vidaMaxima)
+            {
+                curando = true;
+            }
+            else
+            {
+                curando = false;
+            }
+
+            // Mejora
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (playerControler.money >= costoMejora && playerControler.vidaMaxima < maximaMejora)
+                {
+                    playerControler.money -= costoMejora;
+                    playerControler.MejorarSalud(cantidadMejoraSalud);
+                    curando = true;
+                    if (OtherSoundController != null)
+                    {
+                        OtherSoundController.PlayUpVidaSound();
+                    }
+                }
+                else
+                {
+                    OtherSoundController.PlayNoDineroSound();
+                    Debug.Log("No tienes suficiente dinero");
+                }
+            }
+        }
+        else
+        {
+            curando = false;
+        }
+    }
+
     public void IniciaCuracion()
     {
         if (playerControler != null && !playerControler.muerto)
         {
-            playerControler.vida += cantidadCuracion;
-            playerControler.vida = Mathf.Clamp(playerControler.vida, 0, playerControler.vidaMaxima);
-            OtherSoundController.PlayCuraSound();  // sonido de la cura
+            // Solo aplicamos la cura si realmente le falta vida
+            if (playerControler.vida < playerControler.vidaMaxima)
+            {
+                playerControler.vida += cantidadCuracion;
+                // Aseguramos que no se pase del máximo
+                playerControler.vida = Mathf.Clamp(playerControler.vida, 0, playerControler.vidaMaxima);
+                if (OtherSoundController != null)
+                {
+                    OtherSoundController.PlayCuraSound();
+                }
+            }
         }
     }
 

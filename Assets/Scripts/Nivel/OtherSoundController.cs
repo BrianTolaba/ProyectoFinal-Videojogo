@@ -9,6 +9,9 @@ public class OtherSoundController : MonoBehaviour
     [Header("Money")]
     [SerializeField] private AudioClip soundMoney;
 
+    [Header("No Money")]
+    [SerializeField] private AudioClip soundNoMoney;
+
     [Header("Enemy")]
     [SerializeField] private AudioClip soundEnemyAttack;
     [SerializeField] private AudioClip soundEnemyVoice;
@@ -26,6 +29,11 @@ public class OtherSoundController : MonoBehaviour
     {
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(soundMoney);
+    }
+    public void PlayNoDineroSound()
+    {
+        audioSource.pitch = 1f;
+        audioSource.PlayOneShot(soundNoMoney);
     }
     public void PlayAtaqueEnemigoSound()
     {

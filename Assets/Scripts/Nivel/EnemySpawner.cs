@@ -3,52 +3,55 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [Header("Configuracion Spawn")]
     [SerializeField] GameObject goblinPrefab;
-    [SerializeField] GameObject moneyPrefab;
     [SerializeField] int maxGoblins = 4;
     [SerializeField] float spawnCooldown = 3f;
-    [SerializeField] float spawnRadius = 5f;   // radio máximo permitido alrededor de la casa
-    [SerializeField] float areaX = 2f;         // ancho del área de spawn
-    [SerializeField] float areaY = 2f;         // alto del área de spawn
-    [SerializeField] int vida = 5;             // vida de la choza
-    [SerializeField] Sprite spriteDestruida;   // imagen de la choza rota
+    [SerializeField] float spawnRadius = 5f;    // Distancia máx para contar goblins
+
+    [Header("Area de Spawn")]
+    [SerializeField] float areaX = 2f;
+    [SerializeField] float areaY = 2f;
+
+    [Header("Configuracion Vida")]
+    [SerializeField] int vida = 5;
+    [SerializeField] Sprite spriteDestruida;
+    [SerializeField] GameObject moneyPrefab;
+
     [Header("Audio")]
     [SerializeField] AudioClip sonidoGolpe;
     [SerializeField] AudioClip sonidoDestruccion;
 
     private float spawnTimer;
     private List<GameObject> goblins = new List<GameObject>();
-    private List<GameObject> money = new List<GameObject>();
     private bool destruida = false;
+
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
     private AudioSource audioSource;
     private float variacionPitch = 0.2f;
-
-    void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
         col = GetComponent<Collider2D>();
     }
 
-    void Update()
+    private void Update()
     {
-        // Si la choza está destruida, no hacemos nada más.
-        if (destruida) return;
+        if (destruida) return;                                // Si la choza esta destruida, no hace nada mas
 
-        // limpiar lista de goblins muertos (Destroy los deja en null)
-        goblins.RemoveAll(g => g == null);
+        goblins.RemoveAll(g => g == null);                    // Limpiar lista de goblins muertos
 
-        // contar goblins dentro del radio
         int goblinsEnRango = 0;
-        foreach (var g in goblins)
+        foreach (var g in goblins)                            // Contar goblins dentro del radio
         {
             if (Vector2.Distance(transform.position, g.transform.position) <= spawnRadius)
+            {
                 goblinsEnRango++;
+            }
         }
-        // si hay menos goblins en rango que el máximo, iniciar cooldown
-        if (goblinsEnRango < maxGoblins)
+        if (goblinsEnRango < maxGoblins)                      // Generar nuevo enemigo si hay espacio
         {
             spawnTimer -= Time.deltaTime;
             if (spawnTimer <= 0f)
@@ -59,20 +62,26 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
-            spawnTimer = spawnCooldown; // reset si está completo
+            spawnTimer = spawnCooldown;                      // Reset si está completo
         }
+    }
+    private void SpawnGoblin()
+    {
+        if (goblinPrefab == null) return;
+
+        float randomX = (Random.value - 0.5f) * 2 * areaX + transform.position.x;
+        float randomY = (Random.value - 0.5f) * 2 * areaY + transform.position.y;
+        GameObject newGoblin = Instantiate(goblinPrefab, new Vector3(randomX, randomY, 0), Quaternion.identity);
+        goblins.Add(newGoblin);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Si ya está destruida, ignoramos golpes
-        if (destruida) return;
+        if (destruida) return;                               // Si ya esta destruida, ignora golpes
 
         if (collision.CompareTag("Espada"))
         {
-            // Buscamos el script del jugador para saber cuánto daño hace
             PlayerControler playerScript = collision.GetComponentInParent<PlayerControler>();
-
             if (playerScript != null)
             {
                 RecibirDanio(playerScript.damage);
@@ -96,39 +105,36 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void DestruirChoza()
+    private void DestruirChoza()
     {
         destruida = true;
         gameObject.tag = "Untagged";
+
         // Cambiar el Sprite
         if (spriteRenderer != null && spriteDestruida != null)
         {
             spriteRenderer.sprite = spriteDestruida;
-            GameObject newMoney = Instantiate(moneyPrefab, new Vector3(transform.position.x, transform.position.y - 1, 0), Quaternion.identity);
-            money.Add(newMoney);
         }
+        // Loot (Moneda)
+        if (moneyPrefab != null)
+        {
+            Instantiate(moneyPrefab, transform.position + Vector3.down, Quaternion.identity); //new Vector3(transform.position.x, transform.position.y - 1, 0)
+        }
+        // Desactivar fisica
         if (col != null)
         {
             col.enabled = false;
         }
+        // Sonido final
         if (audioSource != null && sonidoDestruccion != null)
         {
             audioSource.pitch = 1f;
             audioSource.PlayOneShot(sonidoDestruccion);
         }
-        Debug.Log("¡La choza ha sido destruida!");
-    }
-    
-    void SpawnGoblin()
-    {
-        float xPos = (Random.value - 0.5f) * 2 * areaX + transform.position.x;
-        float yPos = (Random.value - 0.5f) * 2 * areaY + transform.position.y;
-
-        GameObject newGoblin = Instantiate(goblinPrefab, new Vector3(xPos, yPos, 0), Quaternion.identity);
-        goblins.Add(newGoblin);
+        Debug.Log("Choza destruida");
     }
 
-    private void OnDrawGizmosSelected() //Ver rango de busqueda del player
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, spawnRadius);

@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 1.5
   cantidadMejoraDanio: 1
-  costoMejora: 2
+  costoMejora: 7
   OtherSoundController: {fileID: 3119540638088955185}
 --- !u!114 &3119540638088955185
 MonoBehaviour:
@@ -69,6 +69,7 @@ MonoBehaviour:
   audioSource: {fileID: 2226274000787951144}
   variacionPitch: 0.05
   soundMoney: {fileID: 0}
+  soundNoMoney: {fileID: 8300000, guid: 9350554eef29915419bc749d601e203c, type: 3}
   soundEnemyAttack: {fileID: 0}
   soundEnemyVoice: {fileID: 0}
   soundEnemyDamage: {fileID: 0}
