@@ -113,10 +113,10 @@ public class PlayerControler : MonoBehaviour
         if (ataqueTimer > 0) return;
 
         // Detectar teclas de ataque
-        if (Input.GetKeyDown(KeyCode.U)) EjecutarAtaque(0);      // Arriba
-        else if (Input.GetKeyDown(KeyCode.J)) EjecutarAtaque(1); // Abajo
-        else if (Input.GetKeyDown(KeyCode.H)) EjecutarAtaque(2); // Izquierda
-        else if (Input.GetKeyDown(KeyCode.K)) EjecutarAtaque(3); // Derecha
+        if (Input.GetKeyDown(KeyCode.U) || Input.GetKeyDown(KeyCode.JoystickButton3)) EjecutarAtaque(0);      // Arriba
+        else if (Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.JoystickButton0)) EjecutarAtaque(1); // Abajo
+        else if (Input.GetKeyDown(KeyCode.H) || Input.GetKeyDown(KeyCode.JoystickButton2)) EjecutarAtaque(2); // Izquierda
+        else if (Input.GetKeyDown(KeyCode.K) || Input.GetKeyDown(KeyCode.JoystickButton1)) EjecutarAtaque(3); // Derecha
     }
     private void EjecutarAtaque(int direccion)
     {

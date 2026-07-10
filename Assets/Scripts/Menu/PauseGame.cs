@@ -8,9 +8,13 @@ public class PauseGame : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))      // Si Escape fue precionado alterna entre
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))      // Si Escape fue precionado alterna entre
         {
             AlternarPausa();
+        }
+        if (juegoPausado == true && Input.GetKeyDown(KeyCode.JoystickButton6))
+        {
+            IrAlMenu();
         }
     }
     public void AlternarPausa()

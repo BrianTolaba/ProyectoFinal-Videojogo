@@ -114,7 +114,7 @@ public class MonkController : MonoBehaviour
             }
 
             // Mejora
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.JoystickButton4) || Input.GetKeyDown(KeyCode.JoystickButton5))
             {
                 if (playerControler.money >= costoMejora && playerControler.vidaMaxima < maximaMejora)
                 {

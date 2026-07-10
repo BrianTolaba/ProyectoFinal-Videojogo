@@ -45,17 +45,17 @@ public class GameManager : MonoBehaviour
     {
         if (gameOverActivo)                                                          // Solo leer imputs si es GameOver
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.JoystickButton0) || Input.GetKeyDown(KeyCode.JoystickButton1) || Input.GetKeyDown(KeyCode.JoystickButton2) || Input.GetKeyDown(KeyCode.JoystickButton3))
             {
                 ReiniciarEscena();
             }
-            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M) || Input.GetKeyDown(KeyCode.JoystickButton6))
             {
                 IrAlMenu();   
             }
             if (winningActivo)
             {
-                if (Input.GetKeyDown(KeyCode.Escape)) IrAlMenu();
+                if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton6)) IrAlMenu();
             }
         }
     }
